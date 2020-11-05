@@ -1,4 +1,10 @@
 # Django (Python)
+
+<p align="center">
+  <img src = "Python-y-django.jpg" />
+</p>
+
+
 Vamos a definir lo que es Django primeramente:
 
 Django es un framework de desarrollo web de codigo abierto, escrito en Python que respeta el patron de diseno conocido como "MVC (Modelo Vista Controlador) fue desarrollado en su origen para gestionar varias paginas orientadas a noticias de la World Company de Lawrences de Kansas, fue liberada al pablico bajo una licencia BSD en julio 2005.
@@ -18,6 +24,12 @@ Para la instalacion de Django lo que tienes que hacer primeramente desde la vent
 https://www.djangoproject.com/download/
 
 Crear nuestro proyecto de Django.-
+
+<p align="center">
+  <img src = "Ejecutar proyecto de django.jpg" />
+</p>
+
+
 Para crear nuestro proyecto de Django desde la ventana de comando del sistema operativo de Windows en mi caso ponemos cd wamp64/www/Curso_Udemy_Master_Python/22-django
 para crear el proyecto lo creamos de la siguiente manera django-admin startproject AprendiendoDjango, para este caso nuestro proyecto se llama "AprendiendoDjango"
 
@@ -33,6 +45,10 @@ https://docs.djangoproject.com/en/3.1/intro/tutorial01/
 
 Routing y vistas en Django
 Crear vistas y rutas.-
+
+<p align="center">
+  <img src = "python - django (muestra los template).jpg" />
+</p>
 
 Para crear las rutas y vistas en el archivo views.py de la aplicacion en este caso mi apps se crear las diferentes vistas, para ello podermos hacer uso del paquete HttpResponse, o render de Django para llamar luego a los diferentes template., el siguiente codigo:
 
@@ -221,6 +237,20 @@ urlpatterns = [
 https://docs.djangoproject.com/en/3.1/intro/tutorial01/
 
 Plantillas y Templates de Django
+
+<p align="center">
+  <img src = "python - django (muestra los template).jpg" />
+</p>
+
+<p align="center">
+  <img src = "Captura de pantalla (index.html).jpg" />
+</p>
+
+<p align="center">
+  <img src ="Captura de pantalla (contacto.html).jpg" />
+</p>
+
+
 Templates separadas.- Una vista es un tipo de pagina WEB que el servidor generalmente especifica funciones y tiene un template especifico los template se especifica dentro de la carpeta templates de la aplicacion de Django, para este caso vamos a crear varios templates para mi proyecto "index.html", "layout.html", "pagina.html", "contacto.html", que son fragmentos de codigo HTML para ser usado en Python
 
 https://docs.djangoproject.com/en/3.1/intro/tutorial03/
@@ -819,6 +849,18 @@ En la aplicacion de Visual Studio Code tenemos que tener instalada la aplicacion
 Una vez instalado el pylint de Djando en el Visual Studio Code para hacer referencia de este modulo del menu escogemos File (del visual Studio Code), del submenu que aparece seleccionamos "Preferencices", luego settings nos aparece vamos opciones en donde buscamos pylint, que por defencto dice pylint, que lo ponemos a pylint-django para que lo coja.
 
 Crear modelos.- Es un diseno que define las tablas que se van a crear en la base de datos.Lo modelos se crean como en una clase y como sabemos que es un modelo (porque hace uso de la libreria models.Model) en la clase, tenemos los siguientes modelos.
+
+<p align="center">
+  <img src ="Django_dbase (make_migrations).jpg" />
+</p>
+
+<p align="center">
+  <img src ="Django_dbase (sqlmigrate).jpg" />
+</p>
+
+<p align="center">
+  <img src ="Django_dbase (migrate).jpg" />
+</p>
 
 from django.db import models
 
