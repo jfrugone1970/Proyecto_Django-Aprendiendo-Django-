@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{titulo}} {% endblock %}
+
+{% block content %}
+
+<!-- Esto es un comentario en html-->
+{% comment 'Pagina para mostrar contacto' %}
+
+{% endcomment %}
+
+{% if lista %}
+
+   <h1 class="title">Listado de Estudiantes </h1>
+
+   {% for estudiante in lista %}
+
+     <p>{{estudiante.nombre}}    {{estudiante.apellido}}</p>
+
+   {% endfor %}
+
+{% else %}
+
+   <h1>No hay datos del estudiante!!!!</h1>
+   <h3>Por que no se ha enviado datos</h3>
+   
+{% endif %}
+
+
+{% endblock %}

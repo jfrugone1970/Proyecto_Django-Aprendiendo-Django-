@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{titulo}} {% endblock %}
+
+{% block content %}
+
+<!-- Esto es un comentario en html-->
+{% comment 'Esto es un comentario' %}
+
+{% endcomment %}
+
+{% if nombre %}
+
+   {% load filters %}
+   {{nombre|saludo|safe}}
+
+{% else %}
+
+   <p>No existe nombre</p>
+   
+{% endif %}
+
+{% include 'fecha-actual.html' %}
+
+<h1 class="title">{{titulo}}</h1>
+<p><strong>Periodos Desde 1970 Bisiestos hasta 2020</strong></p>
+
+{% if bisiesto %}
+
+   <br/>
+   <ul>
+
+      {% for bisi in bisiesto %}
+
+         <li>{{bisi}} {{forloop.counter}}</li>
+
+      {% empty %}
+
+         <p>No hay datos de  bisiestos</p>     
+
+      {% endfor %}    
+
+   </ul>
+
+   <br/>
+
+{% else %}
+
+   <p>No se ha enviado datos para los periodos bisiestos</p>
+
+{% endif %}
+
+<br/>
+<h3>Periodos bisiestos desde 1950 hasta el 2020</h3>
+
+{% if periodo %}
+
+   <ul>
+
+      {% for dato in periodo %}
+
+         {% if dato|divisibleby:4 == True %}
+
+           <li>{{dato}}</li>
+
+         {% endif %}
+
+       
+      {% empty %}
+
+           <strong>No se ha enviado datos</strong>
+
+      {% endfor %}     
+
+
+   </ul>
+
+{% else %}
+
+   <h2><p>No hay datos para mostrar</p></h2>
+
+{% endif %}
+
+<br/>
+
+{% endblock %}

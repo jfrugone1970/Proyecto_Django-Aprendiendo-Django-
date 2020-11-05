@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block title %}
+        <!-- Bloque de codigo que viene del template-->
+        {% endblock %}
+
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+
+
+</head>
+
+
+<body>
+
+    <!-- Cabecera de la pagina-->
+    <header>
+        <div id="logotipo">
+            <!-- Logo Django-->
+            <img src="{% static 'images/logo.png'%}" />
+            <h1>Sitio Web con Django!!!</h1>
+
+        </div>
+
+    </header>
+
+    <nav>
+
+        <ul>
+            <li>
+                <a href="{% url 'inicio' nombre='Lcdo. Jose Fernando Frugone Jaramillo' %}">Inicio</a>
+            </li>
+            <li>
+                <a href="{% url 'hola_mundo' %}">Hola-mundo</a>
+            </li>
+            <li>
+                <a href="{% url 'pagina' %}">Paginas</a>
+            </li>
+            <li>
+                <a href="{% url 'contacto' profesion='Lcdo.' nombre='Jose Fernando' apellido='Frugone Jaramillo' %}">Contacto</a>
+            </li>
+            <li>
+                <a href="{% url 'estudiante' nombre='Luis Adrian' apellido='Garcia Morales' %}">Estudiante</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <div class="barra">
+        <span class="esquina-izquierda"></span>
+        <span class="relleno-barra"></span>
+        <span class="esquina-derecha"></span>
+    </div>
+
+    <div class="contador-visitas">
+
+        <aside>
+
+                <h2 class="title">Visitas de pagina</h2>
+
+                <a href="https://www.contadorvisitasgratis.com" title="contador de visitas"><img
+                        src="https://counter3.stat.ovh/private/contadorvisitasgratis.php?c=uaa1seee4dfrfe6n1kmllx6dggjh116s"
+                        border="0" title="contador de visitas" alt="contador de visitas" target="_blank"></a>
+
+        </aside>
+
+    
+    </div>
+
+    <div class="box-imagen">
+
+         <img src="{% static 'images/mifondo2.jpg'%}" />
+
+    </div>
+
+
+    <div id="content">
+
+        <div class="box">
+            {% block content %}
+            <!-- Codigo que viene del template-->
+            <strong>Contenido del bloque Original!!</strong>
+
+
+            {% endblock %}
+
+            <div class="mapa-lugar">
+
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15948.13508653324!2d-79.88568169999999!3d-2.1407391000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sec!4v1604331730668!5m2!1ses-419!2sec" width="300" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>                 
+
+            
+            </div>
+    
+        </div>
+
+
+    </div>
+
+
+    <footer>
+        Master en Python &copy; Lcdo Jose Frugone - {% now "d/m/Y" %}
+    </footer>
+
+
+
+</body>
+
+</html>
