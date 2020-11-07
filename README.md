@@ -30,6 +30,7 @@ Crear nuestro proyecto de Django.-
 </p>
 
 
+
 Para crear nuestro proyecto de Django desde la ventana de comando del sistema operativo de Windows en mi caso ponemos cd wamp64/www/Curso_Udemy_Master_Python/22-django
 para crear el proyecto lo creamos de la siguiente manera django-admin startproject AprendiendoDjango, para este caso nuestro proyecto se llama "AprendiendoDjango"
 
@@ -191,7 +192,7 @@ def crear_articulo(request):
 
 
 
-las rutas se especifican dentro del proyecto de Django en el archivo de configuracion de las ruras urls.py, asi de esta manera:
+las rutas se especifican dentro del proyecto de Django en el archivo de configuracion de las rutas urls.py, asi de esta manera:
 
 """AprendiendoDjango URL Configuration
 
@@ -846,7 +847,7 @@ STATIC_URL = '/static/'
 
 En la aplicacion de Visual Studio Code tenemos que tener instalada la aplicacion de Django, y la de Python, para instalar pylint de Django desde la ventana de comandos de Windows digitamos pylint install pylint-django y damos enter se procede a instalar pylint de django.
 
-Una vez instalado el pylint de Djando en el Visual Studio Code para hacer referencia de este modulo del menu escogemos File (del visual Studio Code), del submenu que aparece seleccionamos "Preferencices", luego settings nos aparece vamos opciones en donde buscamos pylint, que por defencto dice pylint, que lo ponemos a pylint-django para que lo coja.
+Una vez instalado el pylint de Django en el Visual Studio Code para hacer referencia de este modulo del menu escogemos File (del visual Studio Code), del submenu que aparece seleccionamos "Preferencices", luego settings nos aparece vamos opciones en donde buscamos pylint, que por defencto dice pylint, que lo ponemos a pylint-django para que lo coja.
 
 Crear modelos.- Es un diseno que define las tablas que se van a crear en la base de datos.Lo modelos se crean como en una clase y como sabemos que es un modelo (porque hace uso de la libreria models.Model) en la clase, tenemos los siguientes modelos.
 
