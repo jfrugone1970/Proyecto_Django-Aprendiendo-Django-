@@ -135,11 +135,13 @@ def crear_articulo(request, title, content, public):
     
     return HttpResponse(f"Articulo creado <strong> {articulo.title} - {articulo.content} </strong>:")
 
-def persona(request, apellidos, nombres, pais, provincia, direccion, correo, telefono):
+def persona(request, apellidos, nombres, profesion, certificado,  pais, provincia, direccion, correo, telefono):
 
     persona = DatosPer(
         apellidos = apellidos,
         nombres = nombres,
+        profesion = profesion,
+        certificado = certificado,
         pais = pais,
         provincia = provincia,
         direccion = direccion,
@@ -149,13 +151,13 @@ def persona(request, apellidos, nombres, pais, provincia, direccion, correo, tel
 
     persona.save()
 
-    return HttpResponse(f"Persona creada <h3><strong> {persona.apellidos} - {persona.nombres} - {persona.pais} - {persona.provincia} - {persona.direccion} - {persona.telefono} </strong></h3>")     
+    return HttpResponse(f"Persona creada <h3><strong> {persona.apellidos} - {persona.nombres} - {persona.profesion} - {persona.certificado} - {persona.pais} - {persona.provincia} - {persona.direccion} - {persona.telefono} </strong></h3>")     
 
 def lista_persona(request, apellidos, nombres, pais, provincia):
 
     persona = DatosPer.objects.get(apellidos=apellidos, nombres=nombres, pais=pais, provincia=provincia)
     
-    return HttpResponse(f"Persona: <br/> <strong> 'Codigo :' {persona.id} <br/> 'Apellidos :' {persona.apellidos} <br/> 'Nombres :' {persona.nombres} <br/> 'Pais : ' {persona.pais} <br/> 'Provincia :' {persona.provincia} <br/> 'Direccion : ' {persona.direccion} <br/> 'Telefono :' {persona.telefono} <br/></strong>")
+    return HttpResponse(f"Persona: <br/> <strong> 'Codigo :' {persona.id} <br/> 'Apellidos :' {persona.apellidos} <br/> 'Nombres :' {persona.nombres} <br/> 'Profesion :' {persona.profesion} <br/> 'Certificados :' {persona.certificado} <br/> 'Pais : ' {persona.pais} <br/> 'Provincia :' {persona.provincia} <br/> 'Direccion : ' {persona.direccion} <br/> 'Telefono :' {persona.telefono} <br/></strong>")
    
    
 

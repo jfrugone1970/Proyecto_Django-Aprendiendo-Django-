@@ -33,6 +33,8 @@ class Choice(models.Model):
 class DatosPer(models.Model):
     apellidos = models.CharField(max_length=50)
     nombres = models.CharField(max_length=50)
+    profesion = models.CharField(max_length=250, default='Lcdo en Informatica')
+    certificado = models.TextField(default='Prog. de microcomputadoras - ESPOL')
     image = models.ImageField(default='null')
     pais = models.CharField(max_length=200)
     provincia = models.CharField(max_length=60)
