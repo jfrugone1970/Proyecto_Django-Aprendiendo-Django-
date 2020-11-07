@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from miapp.models import Article, Category, SubCategory
+from miapp.models import Article, Category, SubCategory, DatosPer
 
 # Create your views here.
 # MVC - Modelo Vista Controlador -> Acciones(metodos)
@@ -122,19 +122,46 @@ def estudiante(request, nombre="", apellido=""):
         'lista':lista
     })
 
-def crear_articulo(request):
+def crear_articulo(request, title, content, public):
 
     articulo = Article(
-        title = 'Primer Articulo',
-        content = 'Contenido del articulo',
-        public = True,
+        title = title,
+        content = content,
+        public = public
 
     )
 
     articulo.save()
     
-    return HttpResponse("Usuario creado :")                        
+    return HttpResponse(f"Articulo creado <strong> {articulo.title} - {articulo.content} </strong>:")
 
+def persona(request, apellidos, nombres, pais, provincia, direccion, correo, telefono):
 
+    persona = DatosPer(
+        apellidos = apellidos,
+        nombres = nombres,
+        pais = pais,
+        provincia = provincia,
+        direccion = direccion,
+        correo = correo,
+        telefono = telefono
+    )
 
+    persona.save()
+
+    return HttpResponse(f"Persona creada <h3><strong> {persona.apellidos} - {persona.nombres} - {persona.pais} - {persona.provincia} - {persona.direccion} - {persona.telefono} </strong></h3>")     
+
+def lista_persona(request, apellidos, nombres, pais, provincia):
+
+    persona = DatosPer.objects.get(apellidos=apellidos, nombres=nombres, pais=pais, provincia=provincia)
+    
+    return HttpResponse(f"Persona: <br/> <strong> 'Codigo :' {persona.id} <br/> 'Apellidos :' {persona.apellidos} <br/> 'Nombres :' {persona.nombres} <br/> 'Pais : ' {persona.pais} <br/> 'Provincia :' {persona.provincia} <br/> 'Direccion : ' {persona.direccion} <br/> 'Telefono :' {persona.telefono} <br/></strong>")
+   
+   
+
+def articulo(request, title, content):
+
+    articulo = Article.objects.get(title=title, content=content)
+    
+    return HttpResponse(f"Articulo: <br/> <strong> {articulo.id} {articulo.title} {articulo.content} </strong>")
 

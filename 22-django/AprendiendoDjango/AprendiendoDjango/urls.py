@@ -33,8 +33,9 @@ urlpatterns = [
     path('estudiante/', views.estudiante, name="estudiante"),
     path('estudiante/<str:nombre>', views.estudiante, name="estudiante"),
     path('estudiante/<str:nombre>/<str:apellido>/', views.estudiante, name="estudiante"),
-    path('crear-articulo/', views.crear_articulo, name="crea_articulo")
-    
-
+    path('crear-articulo/<str:title>/<str:content>/<str:public>/', views.crear_articulo, name="crea_articulo"),
+    path('mostrar-articulo/<str:title>/<str:content>/', views.articulo, name="mostrar"),
+    path('crea-persona/<str:apellidos>/<str:nombres>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/',views.persona, name="persona"),
+    path('lista/<str:apellidos>/<str:nombres>/<str:pais>/<str:provincia>/', views.lista_persona, name="mostrar_p")
     
 ]

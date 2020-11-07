@@ -27,8 +27,22 @@ class Question(models.Model):
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)        
+    choice_text = models.CharField(max_length=250)
+    votes = models.IntegerField(default=0)
+
+class DatosPer(models.Model):
+    apellidos = models.CharField(max_length=50)
+    nombres = models.CharField(max_length=50)
+    image = models.ImageField(default='null')
+    pais = models.CharField(max_length=200)
+    provincia = models.CharField(max_length=60)
+    direccion = models.TextField()
+    correo = models.TextField()
+    telefono = models.TextField()
+    fecha_ing = models.DateTimeField(auto_now_add=True)
+    fecha_mod = models.DateTimeField(auto_now=True)
+
+
     
         
 
