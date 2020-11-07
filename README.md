@@ -30,6 +30,7 @@ Crear nuestro proyecto de Django.-
 </p>
 
 
+
 Para crear nuestro proyecto de Django desde la ventana de comando del sistema operativo de Windows en mi caso ponemos cd wamp64/www/Curso_Udemy_Master_Python/22-django
 para crear el proyecto lo creamos de la siguiente manera django-admin startproject AprendiendoDjango, para este caso nuestro proyecto se llama "AprendiendoDjango"
 
@@ -191,7 +192,7 @@ def crear_articulo(request):
 
 
 
-las rutas se especifican dentro del proyecto de Django en el archivo de configuracion de las ruras urls.py, asi de esta manera:
+las rutas se especifican dentro del proyecto de Django en el archivo de configuracion de las rutas urls.py, asi de esta manera:
 
 """AprendiendoDjango URL Configuration
 
@@ -846,7 +847,7 @@ STATIC_URL = '/static/'
 
 En la aplicacion de Visual Studio Code tenemos que tener instalada la aplicacion de Django, y la de Python, para instalar pylint de Django desde la ventana de comandos de Windows digitamos pylint install pylint-django y damos enter se procede a instalar pylint de django.
 
-Una vez instalado el pylint de Djando en el Visual Studio Code para hacer referencia de este modulo del menu escogemos File (del visual Studio Code), del submenu que aparece seleccionamos "Preferencices", luego settings nos aparece vamos opciones en donde buscamos pylint, que por defencto dice pylint, que lo ponemos a pylint-django para que lo coja.
+Una vez instalado el pylint de Django en el Visual Studio Code para hacer referencia de este modulo del menu escogemos File (del visual Studio Code), del submenu que aparece seleccionamos "Preferencices", luego settings nos aparece vamos opciones en donde buscamos pylint, que por defencto dice pylint, que lo ponemos a pylint-django para que lo coja.
 
 Crear modelos.- Es un diseno que define las tablas que se van a crear en la base de datos.Lo modelos se crean como en una clase y como sabemos que es un modelo (porque hace uso de la libreria models.Model) en la clase, tenemos los siguientes modelos.
 
@@ -1006,14 +1007,208 @@ para descargarlos nos vamos a la opcion download y buscamos la version para nues
   <img src ="Django_dbase (Db_browse_sqlite).jpg" />
 </p>
 
+Guardar datos en la base de datos usando los modelos.-
+Para guardar datos de la base de datos usando los modelos para ellos usamos los las vistas que tenemos en el archivo views.py creamos una nueva vista (funcion) que para ello vamos a usar el primer modelo que hemos agregado que se llama "Article", y definimos la funcion para guardar que se llama "crear_articulo"
+
+tenemos que importar los modelos que se ha creado en la base de datos en la vista
+from miapp.models import Article, Category, SubCategory
+
+en el archivo del proyecto principal de Django "urls.py", definimos la ruta de la vista que va a agregar, ponemos de la siguiente manera:
+
+"""AprendiendoDjango URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path
+
+# importar mi app con mi vista
+from miapp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.index, name="index"),
+    path('inicio/', views.index, name="inicio"),
+    path('inicio/<str:nombre>',views.index, name="inicio"),
+    path('hola-mundo/', views.hola_mundo, name="hola_mundo"),
+    path('paginas-pruebas/', views.pagina, name="pagina"),
+    path('paginas-pruebas/<int:redirigir>', views.pagina, name="pagina"),
+    path('contacto/', views.contacto, name="contacto"),
+    path('contacto/<str:profesion>/<str:nombre>', views.contacto, name="contacto"),
+    path('contacto/<str:profesion>/<str:nombre>/<str:apellido>', views.contacto, name="contacto"),
+    path('estudiante/', views.estudiante, name="estudiante"),
+    path('estudiante/<str:nombre>', views.estudiante, name="estudiante"),
+    path('estudiante/<str:nombre>/<str:apellido>/', views.estudiante, name="estudiante"),
+    path('crear-articulo/', views.crear_articulo, name="crea_articulo")
+    
+
+    
+]
+
+En el archivo "views.py" de la aplicacion "miapp" llamo al modelo importando del archivo models.py asi de esta manera:
+from miapp.models import Article, Category
+
+from django.shortcuts import render, HttpResponse, redirect
+from miapp.models import Article, Category, SubCategory
+
+# Create your views here.
+# MVC - Modelo Vista Controlador -> Acciones(metodos)
+# MVT - Modelo Template Vista -> Acciones(metodos)
+
+layout = """
+
+        <h1>Sitio web con Django | Lcdo Jose Fernando Frugone</h1>
+        <hr/>
+        <ul>
+            <li>
+                <a href="/inicio">Inicio</a>
+            </li>
+            <li>
+                <a href="/hola-mundo">Hola-mundo</a>
+            </li>
+            <li>
+                <a href="/paginas-pruebas">Paginas</a>
+            </li>
+            <li>
+                <a href="/contacto/Lcdo./Jose Fernando/Frugone Jaramillo">Contacto</a>
+            </li>
+            <li>
+                 <a href="/estudiante/Luis Andres/Garcia Moran">Estudiante</a>
+            </li>
+
+        </ul>
+        <hr/>
+
+"""
+
+def index(request, nombre=""):
+
+    year = 1970
+
+    bisiesto = []
+
+    while year <= 2020:
+
+        if year % 4 == 0:
+
+            bisiesto.append(f"{str(year)}")
+      
+        year += 1
+
+    dato1 = 1950
+    periodo = range(dato1, 2021)
+    nombre = "Lcdo. Jose Fernando Frugone Jaramillo"
+
+    return render(request, 'index.html', {
+        'titulo':'Inicio',
+        'nombre':nombre,
+        'bisiesto':bisiesto,
+        'periodo':periodo
+        
+    }) 
+
+def hola_mundo(request):
+
+    return render(request, 'hola_mundo.html') 
+
+def pagina(request, redirigir = 0):
+
+    
+    if redirigir == 1:
+        return redirect('/index')
+    
+    elif redirigir == 2:
+        return redirect('/hola-mundo')
+    
+    elif redirigir == 3:
+        return redirect('contacto',profesion="Lcdo",nombre="Jose Fernando",apellido="Frugone Jaramillo")
+    
+    elif redirect == 4:
+        return redirect('estudiante',nombre="Juan Pablo",apellido="Castro Gonzalez")        
+
+    return render(request, 'pagina.html')
+
+def contacto(request, profesion="", nombre="", apellido=""):
+
+    return render(request, 'contacto.html', {
+        'titulo':'Pagina de contacto',
+        'profesion':profesion,
+        'nombre':nombre,
+        'apellido':apellido
+       
+    })
+
+def estudiante(request, nombre="", apellido=""):
+
+    lista = [{
+        'nombre':'Antonio',
+        'apellido':'Garcia'
+    },
+    {
+        'nombre':'Pablo',
+        'apellido':'Rosales'
+    },
+    {
+        'nombre':'Alejandro',
+        'apellido':'Andrade'
+    },
+    {
+        'nombre':'Luis',
+        'apellido':'Castro'
+    },
+    {
+        'nombre':'Eduardo',
+        'apellido':'Medina'
+    },
+    {
+        'nombre':'Carlos',
+        'apellido':'Gonzalez'
+    }
+    ]
 
 
+    return render(request, 'estudiante.html', {
+        'titulo':'Pagina de estudiante',
+        'lista':lista
+    })
+
+def crear_articulo(request):
+
+    articulo = Article(
+        title = 'Primer Articulo',
+        content = 'Contenido del articulo',
+        public = True,
+
+    )
+
+    articulo.save()
+    
+    return HttpResponse("Usuario creado :")                        
+
+Para grabar un registro a la tabla "Article" de la base de datos de la ventana de comandos del sistema operativo ejecutamos el proyecto WEB de esta manera
+python manage.py runserver, y luego en la ruta del proyecto ponemos la ruta de la vista que es este caso es "crear-articulo", que sale lo siguiente:
+
+<p align="center">
+  <img src ="django_dbase (grabar registro de la base).jpg" />
+</p>
+
+Para visualizar que se graba desde la aplicacion de DB Browser for SQL Lite nos aparece lo siguiente
 
 
-
-
-
-
+<p align="center">
+  <img src ="Django_dbase (Db_browse_sqlite_vista).jpg" />
+</p>
 
 
 
