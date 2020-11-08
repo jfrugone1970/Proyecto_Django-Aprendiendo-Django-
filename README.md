@@ -1289,4 +1289,3 @@ Para visualizar que se graba desde la aplicacion de DB Browser for SQL Lite nos 
 
 
 
-
