@@ -229,9 +229,18 @@ urlpatterns = [
     path('estudiante/', views.estudiante, name="estudiante"),
     path('estudiante/<str:nombre>', views.estudiante, name="estudiante"),
     path('estudiante/<str:nombre>/<str:apellido>/', views.estudiante, name="estudiante"),
-    path('crear-articulo/', views.crear_articulo, name="crea_articulo")
-    
-
+    path('crear-articulo/<str:title>/<str:content>/<str:public>/', views.crear_articulo, name="crea_articulo"),
+    path('editar-articulo/<int:id>/<str:name>/<str:description>/', views.editar_articulo, name="editar_articulo"),
+    path('crear-categori/<str:name>/<str:description>/', views.crear_category, name="crea_categoria"),
+    path('editar-categori/<int:id>/<str:name>/<str:description>/', views.editar_categori, name="editar_categori"),
+    path('categoria-lista/<str:name>/<str:description>/', views.lista_categori, name="lista_categori"),
+    path('crear-subcategori/<str:name>/<str:description>/', views.crear_sub_category, name="crea_subcategori"),
+    path('editar-subcategori/<int:id>/<str:name>/<str:description>/', views.editar_subcategoria, name="editar_subcategori"),
+    path('subcategori-lista/<str:name>/<str:description>/', views.lista_subcategory, name="lista_subcategori"),
+    path('mostrar-articulo/<str:title>/<str:content>/', views.articulo, name="mostrar"),
+    path('crea-persona/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/',views.persona, name="persona"),
+    path('editar-persona/<int:id>/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/', views.editar_persona, name="editar_persona"),
+    path('lista/<str:apellidos>/<str:nombres>/<str:pais>/<str:provincia>/', views.lista_persona, name="mostrar_p")
     
 ]
 
@@ -1050,17 +1059,25 @@ urlpatterns = [
     path('estudiante/', views.estudiante, name="estudiante"),
     path('estudiante/<str:nombre>', views.estudiante, name="estudiante"),
     path('estudiante/<str:nombre>/<str:apellido>/', views.estudiante, name="estudiante"),
-    path('crear-articulo/', views.crear_articulo, name="crea_articulo")
-    
-
+    path('crear-articulo/<str:title>/<str:content>/<str:public>/', views.crear_articulo, name="crea_articulo"),
+    path('editar-articulo/<int:id>/<str:name>/<str:description>/', views.editar_articulo, name="editar_articulo"),
+    path('crear-categori/<str:name>/<str:description>/', views.crear_category, name="crea_categoria"),
+    path('editar-categori/<int:id>/<str:name>/<str:description>/', views.editar_categori, name="editar_categori"),
+    path('categoria-lista/<str:name>/<str:description>/', views.lista_categori, name="lista_categori"),
+    path('crear-subcategori/<str:name>/<str:description>/', views.crear_sub_category, name="crea_subcategori"),
+    path('editar-subcategori/<int:id>/<str:name>/<str:description>/', views.editar_subcategoria, name="editar_subcategori"),
+    path('subcategori-lista/<str:name>/<str:description>/', views.lista_subcategory, name="lista_subcategori"),
+    path('mostrar-articulo/<str:title>/<str:content>/', views.articulo, name="mostrar"),
+    path('crea-persona/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/',views.persona, name="persona"),
+    path('editar-persona/<int:id>/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/', views.editar_persona, name="editar_persona"),
+    path('lista/<str:apellidos>/<str:nombres>/<str:pais>/<str:provincia>/', views.lista_persona, name="mostrar_p")
     
 ]
 
 En el archivo "views.py" de la aplicacion "miapp" llamo al modelo importando del archivo models.py asi de esta manera:
-from miapp.models import Article, Category
 
 from django.shortcuts import render, HttpResponse, redirect
-from miapp.models import Article, Category, SubCategory
+from miapp.models import Article, Category, SubCategory, DatosPer
 
 # Create your views here.
 # MVC - Modelo Vista Controlador -> Acciones(metodos)
@@ -1183,18 +1200,168 @@ def estudiante(request, nombre="", apellido=""):
         'lista':lista
     })
 
-def crear_articulo(request):
+def crear_articulo(request, title, content, public):
 
     articulo = Article(
-        title = 'Primer Articulo',
-        content = 'Contenido del articulo',
-        public = True,
+        title = title,
+        content = content,
+        public = public
 
     )
 
     articulo.save()
     
-    return HttpResponse("Usuario creado :")                        
+    return HttpResponse(f"Articulo creado <strong> {articulo.title} - {articulo.content} </strong>:")
+
+def editar_articulo(request, id, title, content, public):
+
+    articulo = Article.objects.get(pk=id)
+
+    articulo.title = title
+    articulo.content = content
+    articulo.public = public
+
+    articulo.save()
+
+    return HttpResponse(f"Articulo editado <strong> {articulo.title} - {articulo.content} </strong>:")
+
+
+
+
+def crear_category(request, name, description):
+
+    categoria = Category(
+        name = name,
+        description = description
+    )
+
+    categoria.save()
+
+    return HttpResponse(f"Categoria creada <strong> {categoria.name} - {categoria.description} </strong>")
+
+def editar_categori(request, id, name, description):
+
+    categori = Category.objects.get(pk=id)
+
+    categori.name = name
+    categori.description = description
+
+    categori.save()
+
+    return HttpResponse(f"Categoria Editada <strong> {categori.name} - {categori.description} </strong>")    
+
+def lista_categori(request, name, description):
+
+    try:
+        
+        categoria = Category.objects.get(name=name, description=description)
+
+        response = f"Categoria : <br/> <strong> 'Categoria_id : ' {categoria.id} <br/> 'Categoria_name :' {categoria.name} <br/> 'Descripcion : ' {categoria.description} <br/> </strong>"
+    except:
+        response = "<h1> No hay Categoria </h2>"
+
+    return HttpResponse(response)
+
+
+def crear_sub_category(request, name, description):
+
+    subcategori = SubCategory(
+        name = name,
+        description = description
+    )
+
+    subcategori.save()
+
+    return HttpResponse(f"Subcategoria guardada <strong> {subcategori.name} - {subcategori.description} </strong>")
+
+def editar_subcategoria(request, id, name, description):
+
+    subcategori = SubCategory.objects.get(pk=id)
+
+    subcategori.name = name
+    subcategori.description = description
+
+    subcategori.save()
+
+    return HttpResponse(f"Subcategoria editada <strong> {subcategori.name} - {subcategori.description} </strong>")
+
+
+def lista_subcategory(request, name, description):
+
+    try:
+
+        subcategori = SubCategory.objects.get(name=name, description=description)
+
+        response = f"Subcategori: <br/> <strong> 'Subcategori_id : ' {subcategori.id} <br/> 'Subcategori_name :' {subcategori.name} <br/> 'Descripcion : ' {Subcategori.description} <br/> </strong>"
+    except:
+        response = "<h1>No hay subcategoria </h1>"    
+
+    return HttpResponse(response)
+
+
+def persona(request, apellidos, nombres, profesion, certificado,  pais, provincia, direccion, correo, telefono):
+
+    persona = DatosPer(
+        apellidos = apellidos,
+        nombres = nombres,
+        profesion = profesion,
+        certificado = certificado,
+        pais = pais,
+        provincia = provincia,
+        direccion = direccion,
+        correo = correo,
+        telefono = telefono
+    )
+
+    persona.save()
+
+    return HttpResponse(f"Persona creada <h3><strong> {persona.apellidos} - {persona.nombres} - {persona.profesion} - {persona.certificado} - {persona.pais} - {persona.provincia} - {persona.direccion} - {persona.telefono} </strong></h3>")
+
+def editar_persona(request, id, apellidos, nombres, profesion, certificado, pais, provincia, direccion, correo, telefono):
+
+    persona = DatosPer.objects.get(pk=1)
+
+    persona.apellidos = apellidos
+    persona.nombres = nombres
+    persona.profesion = profesion
+    persona.certificado = certificado
+    persona.pais = pais
+    persona.provincia = provincia
+    persona.direccion = direccion
+    persona.correo = correo
+    persona.telefono = telefono
+
+    persona.save()
+
+    return HttpResponse(f"Persona Editada <h3><strong> {persona.apellidos} - {persona.nombres} - {persona.profesion} - {persona.certificado} - {persona.pais} - {persona.provincia} - {persona.direccion} - {persona.telefono} </strong></h3>")
+
+
+def lista_persona(request, apellidos, nombres, pais, provincia):
+
+    try:
+
+        persona = DatosPer.objects.get(apellidos=apellidos, nombres=nombres, pais=pais, provincia=provincia)
+
+        response = f"Persona: <br/> <strong> 'Codigo :' {persona.id} <br/> 'Apellidos :' {persona.apellidos} <br/> 'Nombres :' {persona.nombres} <br/> 'Profesion :' {persona.profesion} <br/> 'Certificados :' {persona.certificado} <br/> 'Pais : ' {persona.pais} <br/> 'Provincia :' {persona.provincia} <br/> 'Direccion : ' {persona.direccion} <br/> 'Telefono :' {persona.telefono} <br/></strong>"
+    except:
+        response = "<h1> Persona no existe</h1>"    
+    
+    return HttpResponse(response)
+   
+   
+
+def articulo(request, title, content):
+
+    try:
+
+        articulo = Article.objects.get(title=title, content=content)
+
+        response = f"Articulo: <br/> <strong> {articulo.id} {articulo.title} {articulo.content} </strong>"
+    except:
+        response = "<h1> Articulo no encontrado </h1>"
+
+    return HttpResponse(response)
+
 
 Para grabar un registro a la tabla "Article" de la base de datos de la ventana de comandos del sistema operativo ejecutamos el proyecto WEB de esta manera
 python manage.py runserver, y luego en la ruta del proyecto ponemos la ruta de la vista que es este caso es "crear-articulo", que sale lo siguiente:
@@ -1209,6 +1376,48 @@ Para visualizar que se graba desde la aplicacion de DB Browser for SQL Lite nos 
 <p align="center">
   <img src ="Django_dbase (Db_browse_sqlite_vista).jpg" />
 </p>
+
+Listar todos los registros de una tabla (Articulo, Category, SubCategory, Persona).-
+Para listar toda la lista de registros de una tabla para ellos vamos a basarnos como ejemplo en la tabla articulos en el fichero "views.py" de la aplicacion "miapps" creamos un metodos que se llama articulo_gen, de esta manera
+
+def articulo_gen(request):
+
+    articulo = Article.objects.all()
+
+    return render(request, 'articulo.html')
+    
+Lo que va hacer es pasar la lista de articulos a un temprate para mostrar la lista de articulos, que vamos a crear el template en la carpeta /templates
+
+{% extends 'layout.html' %}
+
+{% block title %} {{titulo}} {% endblock %}
+
+{% block content %}
+
+<h1 class="title">Listado de Articulos</h1>
+   
+   <ul>
+      {% for articulo in articulos %}
+          <li>{{articulo.id}}.{{articulo.title}}.{{articulo.content}}</li>
+      {% endfor %}
+   </ul>
+
+<!-- Esto es un comentario en html-->
+{% comment 'Esto es un comentario' %}
+
+{% endcomment %}
+
+
+<br/>
+
+{% endblock %}
+
+Al ejecutarlo se vera asi
+
+<p align="center">
+  <img src ="Articulos.jpg" />
+</p>
+
 
 
 
