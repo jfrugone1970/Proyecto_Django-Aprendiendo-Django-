@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{titulo}} {% endblock %}
+
+{% block content %}
+
+<h1 class="title">Listado de Sub - Categorias</h1>
+   
+   <ul>
+      {% for subcategoria in subcategorias %}
+          <li>{{subcategoria.id}}.{{subcategoria.name}}.{{subcategoria.description}}</li>
+      {% endfor %}
+   </ul>
+
+<!-- Esto es un comentario en html-->
+{% comment 'Esto es un comentario' %}
+
+{% endcomment %}
+
+<br/>
+
+{% endblock %}

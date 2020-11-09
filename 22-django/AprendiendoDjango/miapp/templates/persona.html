@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{titulo}} {% endblock %}
+
+{% block content %}
+
+<h1 class="title">Listado de Personas</h1>
+   
+   <ul>
+      {% for persona in personas %}
+          <li>{{persona.id}}.{{persona.apellidos}}.{{persona.nombres}}.{{persona.pais}}.{{persona.provincia}}.{{persona.profesion}}.{{persona.certificado}}.{{persona.direccion}}.{{persona.correo}}.{{persona.telefono}}</li>
+      {% endfor %}
+   </ul>
+
+<!-- Esto es un comentario en html-->
+{% comment 'Esto es un comentario' %}
+
+{% endcomment %}
+
+
+<br/>
+
+{% endblock %}

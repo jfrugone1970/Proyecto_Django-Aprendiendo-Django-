@@ -135,6 +135,92 @@ def crear_articulo(request, title, content, public):
     
     return HttpResponse(f"Articulo creado <strong> {articulo.title} - {articulo.content} </strong>:")
 
+def editar_articulo(request, id, title, content, public):
+
+    articulo = Article.objects.get(pk=id)
+
+    articulo.title = title
+    articulo.content = content
+    articulo.public = public
+
+    articulo.save()
+
+    return HttpResponse(f"Articulo editado <strong> {articulo.title} - {articulo.content} </strong>:")
+
+
+
+
+def crear_category(request, name, description):
+
+    categoria = Category(
+        name = name,
+        description = description
+    )
+
+    categoria.save()
+
+    return HttpResponse(f"Categoria creada <strong> {categoria.name} - {categoria.description} </strong>")
+
+def editar_categori(request, id, name, description):
+
+    categori = Category.objects.get(pk=id)
+
+    categori.name = name
+    categori.description = description
+
+    categori.save()
+
+    return HttpResponse(f"Categoria Editada <strong> {categori.name} - {categori.description} </strong>")    
+
+def lista_categori(request, name, description):
+
+    try:
+        
+        categoria = Category.objects.get(name=name, description=description)
+
+        response = f"Categoria : <br/> <strong> 'Categoria_id : ' {categoria.id} <br/> 'Categoria_name :' {categoria.name} <br/> 'Descripcion : ' {categoria.description} <br/> </strong>"
+    except:
+        response = "<h1> No hay Categoria </h2>"
+
+    return HttpResponse(response)
+
+
+def crear_sub_category(request, name, description):
+
+    subcategori = SubCategory(
+        name = name,
+        description = description
+    )
+
+    subcategori.save()
+
+    return HttpResponse(f"Subcategoria guardada <strong> {subcategori.name} - {subcategori.description} </strong>")
+
+def editar_subcategoria(request, id, name, description):
+
+    subcategori = SubCategory.objects.get(pk=id)
+
+    subcategori.name = name
+    subcategori.description = description
+
+    subcategori.save()
+
+    return HttpResponse(f"Subcategoria editada <strong> {subcategori.name} - {subcategori.description} </strong>")
+
+
+def lista_subcategory(request, name, description):
+
+    try:
+
+        subcategori = SubCategory.objects.get(name=name, description=description)
+
+        response = f"Subcategori: <br/> <strong> 'Subcategori_id : ' {subcategori.id} <br/> 'Subcategori_name :' {subcategori.name} <br/> 'Descripcion : ' {Subcategori.description} <br/> </strong>"
+    except:
+        response = "<h1>No hay subcategoria </h1>"    
+
+    return HttpResponse(response)
+
+
 def persona(request, apellidos, nombres, profesion, certificado,  pais, provincia, direccion, correo, telefono):
 
     persona = DatosPer(
@@ -151,19 +237,85 @@ def persona(request, apellidos, nombres, profesion, certificado,  pais, provinci
 
     persona.save()
 
-    return HttpResponse(f"Persona creada <h3><strong> {persona.apellidos} - {persona.nombres} - {persona.profesion} - {persona.certificado} - {persona.pais} - {persona.provincia} - {persona.direccion} - {persona.telefono} </strong></h3>")     
+    return HttpResponse(f"Persona creada <h3><strong> {persona.apellidos} - {persona.nombres} - {persona.profesion} - {persona.certificado} - {persona.pais} - {persona.provincia} - {persona.direccion} - {persona.telefono} </strong></h3>")
+
+def editar_persona(request, id, apellidos, nombres, profesion, certificado, pais, provincia, direccion, correo, telefono):
+
+    persona = DatosPer.objects.get(pk=1)
+
+    persona.apellidos = apellidos
+    persona.nombres = nombres
+    persona.profesion = profesion
+    persona.certificado = certificado
+    persona.pais = pais
+    persona.provincia = provincia
+    persona.direccion = direccion
+    persona.correo = correo
+    persona.telefono = telefono
+
+    persona.save()
+
+    return HttpResponse(f"Persona Editada <h3><strong> {persona.apellidos} - {persona.nombres} - {persona.profesion} - {persona.certificado} - {persona.pais} - {persona.provincia} - {persona.direccion} - {persona.telefono} </strong></h3>")
+
 
 def lista_persona(request, apellidos, nombres, pais, provincia):
 
-    persona = DatosPer.objects.get(apellidos=apellidos, nombres=nombres, pais=pais, provincia=provincia)
+    try:
+
+        persona = DatosPer.objects.get(apellidos=apellidos, nombres=nombres, pais=pais, provincia=provincia)
+
+        response = f"Persona: <br/> <strong> 'Codigo :' {persona.id} <br/> 'Apellidos :' {persona.apellidos} <br/> 'Nombres :' {persona.nombres} <br/> 'Profesion :' {persona.profesion} <br/> 'Certificados :' {persona.certificado} <br/> 'Pais : ' {persona.pais} <br/> 'Provincia :' {persona.provincia} <br/> 'Direccion : ' {persona.direccion} <br/> 'Telefono :' {persona.telefono} <br/></strong>"
+    except:
+        response = "<h1> Persona no existe</h1>"    
     
-    return HttpResponse(f"Persona: <br/> <strong> 'Codigo :' {persona.id} <br/> 'Apellidos :' {persona.apellidos} <br/> 'Nombres :' {persona.nombres} <br/> 'Profesion :' {persona.profesion} <br/> 'Certificados :' {persona.certificado} <br/> 'Pais : ' {persona.pais} <br/> 'Provincia :' {persona.provincia} <br/> 'Direccion : ' {persona.direccion} <br/> 'Telefono :' {persona.telefono} <br/></strong>")
+    return HttpResponse(response)
    
    
 
 def articulo(request, title, content):
 
-    articulo = Article.objects.get(title=title, content=content)
-    
-    return HttpResponse(f"Articulo: <br/> <strong> {articulo.id} {articulo.title} {articulo.content} </strong>")
+    try:
+
+        articulo = Article.objects.get(title=title, content=content)
+
+        response = f"Articulo: <br/> <strong> {articulo.id} {articulo.title} {articulo.content} </strong>"
+    except:
+        response = "<h1> Articulo no encontrado </h1>"
+
+    return HttpResponse(response)
+
+def articulo_gen(request):
+
+    articulos = Article.objects.all()
+
+    return render(request, 'articulos.html',{
+        'articulos':articulos
+    })
+
+def categoria_gen(request):
+
+    categorias = Category.objects.all()
+
+    return render(request, 'categoria.html',{
+        'categorias':categorias
+    })
+
+def subcategori_gen(request):
+
+    subcategorias = SubCategory.objects.all()
+
+    return render(request, 'subcategoria.html',{
+        'subcategorias':subcategorias
+    })
+
+def personas_gen(request):
+
+    personas = DatosPer.objects.all()
+
+    return render(request, 'persona.html',{
+        'personas':personas
+    })            
+
+
+
 

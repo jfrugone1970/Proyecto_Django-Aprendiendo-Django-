@@ -12,14 +12,17 @@ class Article(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=150)
-    description = models.CharField(max_length=250)
-    created_at = models.DateField()
+    name = models.CharField(max_length=150,default='Informatica',null=False)
+    description = models.CharField(max_length=250,default='Desarrollo Web',null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 
 class SubCategory(models.Model):
-    name = models.CharField(max_length=250)
-    description = models.CharField(max_length=200)
-    created_at = models.DateField()
+    name = models.CharField(max_length=250,default='Informatica',null=False)
+    description = models.CharField(max_length=200,default='Desarrollo Web con Django',null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -33,8 +36,8 @@ class Choice(models.Model):
 class DatosPer(models.Model):
     apellidos = models.CharField(max_length=50)
     nombres = models.CharField(max_length=50)
-    profesion = models.CharField(max_length=250, default='Lcdo en Informatica')
-    certificado = models.TextField(default='Prog. de microcomputadoras - ESPOL')
+    profesion = models.CharField(max_length=250, default='null')
+    certificado = models.TextField(default='null')
     image = models.ImageField(default='null')
     pais = models.CharField(max_length=200)
     provincia = models.CharField(max_length=60)
