@@ -5,12 +5,38 @@
 {% block content %}
 
 <h1 class="title">Listado de Articulos</h1>
+
+   {% if mensaje1 and mensaje %}
+
+      <h3>{{mensaje1}}</h3>
+
+      <br/>
+
+      <h4>{{mensaje}}</h4>
+
+   {% else %}
    
-   <ul>
-      {% for articulo in articulos %}
-          <li>{{articulo.id}}.{{articulo.title}}.{{articulo.content}}</li>
-      {% endfor %}
-   </ul>
+      {% if articulos %}
+
+            <h3><p>Listado de articulos</p><h3>
+
+            <ul>
+
+               {% for articulo in articulos %}
+
+                  <li>
+                     <h4>{{articulo.id}}. {{articulo.title}}</h4>
+                     <p>
+                        {{articulo.content}}
+                        <a href="{% url 'borra_articulo' id=articulo.id %}">Eliminar</a>
+                     </p>
+                  </li>
+               {% endfor %}
+
+            </ul>
+
+      {% endif %}
+   {% endif %}
 
 <!-- Esto es un comentario en html-->
 {% comment 'Esto es un comentario' %}

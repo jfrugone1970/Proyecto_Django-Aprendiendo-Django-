@@ -46,8 +46,11 @@ urlpatterns = [
     path('editar-persona/<int:id>/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/', views.editar_persona, name="editar_persona"),
     path('lista/<str:apellidos>/<str:nombres>/<str:pais>/<str:provincia>/', views.lista_persona, name="mostrar_p"),
     path('articulos/', views.articulo_gen, name="lista_gen_art"),
+    path('borrar-articulo/<int:id>', views.borrar_articulos, name="borra_articulo"),
     path('categorias/', views.categoria_gen, name="lista_gen_cat"),
+    path('borrar-categ/<int:id>', views.borrar_categ, name="borrar_categoria"),
     path('subcategorias/', views.subcategori_gen, name="lista_gen_subcate"),
+    path('borrar-subcategori/<int:id>', views.borrar_subcategori, name="borrar_subcateri"),
     path('personas-gen/', views.personas_gen, name="lista_gen_personas")
     
 ]

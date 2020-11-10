@@ -8,7 +8,11 @@
    
    <ul>
       {% for persona in personas %}
-          <li>{{persona.id}}.{{persona.apellidos}}.{{persona.nombres}}.{{persona.pais}}.{{persona.provincia}}.{{persona.profesion}}.{{persona.certificado}}.{{persona.direccion}}.{{persona.correo}}.{{persona.telefono}}</li>
+         <li>
+            <h4>{{persona.id}}. {{persona.apellidos}} </h4>
+            <p>{{persona.nombres}}.{{persona.pais}}.{{persona.provincia}}.{{persona.profesion}}.{{persona.certificado}}.{{persona.direccion}}.{{persona.correo}}.{{persona.telefono}}</p>
+
+         </li>
       {% endfor %}
    </ul>
 

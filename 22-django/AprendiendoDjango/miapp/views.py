@@ -286,11 +286,28 @@ def articulo(request, title, content):
 
 def articulo_gen(request):
 
-    articulos = Article.objects.all()
+    articulos = Article.objects.order_by("title")
 
     return render(request, 'articulos.html',{
         'articulos':articulos
     })
+
+def borrar_articulos(request, id):
+
+    mensaje = ""
+    mensaje1 = ""
+
+    articulos = Article.objects.get(pk=id)
+
+    articulos.delete()
+
+    mensaje = "Se borro articulo exitosamente"
+    mensaje1 = "El articulo escogido ya no existe en la tabla"
+
+    return render(request, 'articulos.html',{
+        'mensaje':mensaje,
+        'mensaje1':mensaje1
+    })    
 
 def categoria_gen(request):
 
@@ -300,6 +317,24 @@ def categoria_gen(request):
         'categorias':categorias
     })
 
+def borrar_categ(request, id):
+    mensaje = ""
+    mensaje1 = ""
+
+    categorias = Category.objects.get(pk=id)
+   
+    categorias.delete()
+   
+    mensaje = "Se borro la categoria exitosamente"
+    mensaje1 = "La categoria escogida ya no existe en la tabla"
+
+    return render(request, 'categoria.html',{
+        'mensaje':mensaje,
+        'mensaje1':mensaje1
+        
+    })
+
+
 def subcategori_gen(request):
 
     subcategorias = SubCategory.objects.all()
@@ -308,9 +343,28 @@ def subcategori_gen(request):
         'subcategorias':subcategorias
     })
 
+def borrar_subcategori(request, id):
+
+    mensaje = ""
+    mensaje1 = ""
+
+    subcategori = SubCategory.objects.get(pk=id)
+    subcategori.delete()
+
+    
+    mensaje = "Se borro la subcategoria exitosamente"
+    mensaje1 = "La subcategoria escogida ya no existe en la tabla"
+
+    return render(request, 'subcategoria.html',{
+        'mensaje':mensaje,
+        'mensaje1':mensaje1
+        
+    })
+
+
 def personas_gen(request):
 
-    personas = DatosPer.objects.all()
+    personas = DatosPer.objects.order_by("apellidos")
 
     return render(request, 'persona.html',{
         'personas':personas
