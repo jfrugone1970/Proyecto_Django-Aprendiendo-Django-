@@ -31,6 +31,7 @@ Crear nuestro proyecto de Django.-
 
 
 
+
 Para crear nuestro proyecto de Django desde la ventana de comando del sistema operativo de Windows en mi caso ponemos cd wamp64/www/Curso_Udemy_Master_Python/22-django
 para crear el proyecto lo creamos de la siguiente manera django-admin startproject AprendiendoDjango, para este caso nuestro proyecto se llama "AprendiendoDjango"
 
@@ -1417,6 +1418,52 @@ Al ejecutarlo se vera asi
 <p align="center">
   <img src ="Articulos.jpg" />
 </p>
+
+Limit y Order By.- 
+Para mostrar una lista de registros de una tabla ordenada por un campo de una tabla vamos a usar un metodo que se llama Order By del Objeto en este caso "Article", y definimos el nombre del campo por el que vamos a ordenar, asi articulos = Article.objects.order_by("title"), previo a eso podemos establecer el limite de registros que vamos a mostrar poniendo [:1] por ejemplo limitamos a un solo registro, en la vista views.py tenemos el metodo "articulo_gen" que muestro lo indicado
+
+def articulo_gen(request):
+
+    articulos = Article.objects.order_by("title")[:1]
+
+    return render(request, 'articulos.html',{
+        'articulos':articulos
+    })
+    
+    
+ Lo que creamos una variable articulos que va a tomar todos los registros de la tabla "Article" ordenados con el campo "title", y por medio de la funcion render enviamos al archivo "articulos.html" (que creamos en la carpeta templates un archivo que se llama "articulos.html", que es el siguiente codigo:
+ 
+ {% extends 'layout.html' %}
+
+{% block title %} {{titulo}} {% endblock %}
+
+{% block content %}
+
+<h1 class="title">Listado de Articulos</h1>
+   
+   <ul>
+      {% for articulo in articulos %}
+          <li>{{articulo.id}}.{{articulo.title}}.{{articulo.content}}</li>
+      {% endfor %}
+   </ul>
+
+<!-- Esto es un comentario en html-->
+{% comment 'Esto es un comentario' %}
+
+{% endcomment %}
+
+
+<br/>
+
+{% endblock %}
+
+al ejecutar el proyecto WEB aparece de la siguiente manera:
+
+<p align="center">
+  <img src ="Django_dbase (Order by_registros).jpg" />
+</p>
+
+
 
 
 
