@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from miapp.models import Article, Category, SubCategory, DatosPer
+from django.db.models import Q
 
 # Create your views here.
 # MVC - Modelo Vista Controlador -> Acciones(metodos)
@@ -124,6 +125,7 @@ def estudiante(request, nombre="", apellido=""):
 
 def crear_articulo(request, title, content, public):
 
+    
     articulo = Article(
         title = title,
         content = content,
@@ -132,8 +134,40 @@ def crear_articulo(request, title, content, public):
     )
 
     articulo.save()
-    
+
     return HttpResponse(f"Articulo creado <strong> {articulo.title} - {articulo.content} </strong>:")
+
+   
+    
+def save_article(request):
+
+    if request.method == "POST":
+
+        title = request.POST['title']
+        content = request.POST['content']
+        public = request.POST['public']
+       
+        articulos = Article(
+            title = title,
+            content = content,
+            public = public
+        )
+
+        articulos.save()
+
+        return redirect('lista_gen_art')
+
+    
+    
+    else:
+
+        return HttpResponse("<h2>No se ha podido grabar articulo</h2>")
+
+
+def create_article(request):
+
+    return render(request, 'create_article.html')
+
 
 def editar_articulo(request, id, title, content, public):
 
@@ -150,8 +184,9 @@ def editar_articulo(request, id, title, content, public):
 
 
 
-def crear_category(request, name, description):
+def crear_categoria(request, name, description):
 
+    
     categoria = Category(
         name = name,
         description = description
@@ -159,7 +194,36 @@ def crear_category(request, name, description):
 
     categoria.save()
 
-    return HttpResponse(f"Categoria creada <strong> {categoria.name} - {categoria.description} </strong>")
+    return HttpResponse(f"Categoria creado <strong> {categoria.id} - {categoria.name} - {categoria,description} </strong>:")
+
+def save_categoria(request):
+
+    if request.method == "POST":
+
+        name = request.POST['name']
+        description = request.POST['description']
+
+        categorias = Category(
+            name = name,
+            description = description
+        ) 
+
+        categorias.save()
+
+        return redirect('lista_gen_cat')
+
+    
+    
+    else:
+
+        return HttpResponse("<h2>No se ha podido grabar articulo</h2>")
+
+
+def create_categoria(request):
+
+    return render(request, 'create_categoria.html')
+
+
 
 def editar_categori(request, id, name, description):
 
@@ -176,9 +240,9 @@ def lista_categori(request, name, description):
 
     try:
         
-        categoria = Category.objects.get(name=name, description=description)
-
-        response = f"Categoria : <br/> <strong> 'Categoria_id : ' {categoria.id} <br/> 'Categoria_name :' {categoria.name} <br/> 'Descripcion : ' {categoria.description} <br/> </strong>"
+        categoria = Category.objects.get(name=name, description=descripcion)
+        
+        response = f"<h1> Categoria : <strong> {categori.id} - {categori.name} - {categori.description} </strong></h1>"
     except:
         response = "<h1> No hay Categoria </h2>"
 
@@ -187,14 +251,45 @@ def lista_categori(request, name, description):
 
 def crear_sub_category(request, name, description):
 
+    name = request.POST['name']
+    description = request.POST['description']
+
     subcategori = SubCategory(
         name = name,
         description = description
-    )
+    ) 
 
     subcategori.save()
 
-    return HttpResponse(f"Subcategoria guardada <strong> {subcategori.name} - {subcategori.description} </strong>")
+    return HttpResponse(f"<h2> Subcategoria : {subcategori.id} - {subcategori.name} - {subcategori.descripcion} se grabo exitosamene </h2>")
+
+
+def save_sub_category(request):
+
+    if request.method == "POST":
+
+        name = request.POST['name']
+        description = request.POST['description']
+
+
+        subcategori = SubCategory(
+            name = name,
+            description = description
+        )
+
+        subcategori.save()
+
+        return redirect("lista_gen_subcate")
+
+    else:
+
+        return HttpResponse("<h3> Subcategoria no se pudo grabar .... </h3>")
+
+
+def create_subcate(request):
+
+    return render(request, 'create_subcate.html')
+    
 
 def editar_subcategoria(request, id, name, description):
 
@@ -288,6 +383,7 @@ def articulo_gen(request):
 
     articulos = Article.objects.order_by("title")
 
+   
     return render(request, 'articulos.html',{
         'articulos':articulos
     })
@@ -361,6 +457,44 @@ def borrar_subcategori(request, id):
         
     })
 
+def save_persona(request):
+
+    if request.method == "POST":
+
+        apellidos = request.POST['apellidos']
+        nombres = request.POST['nombres']
+        profesion = request.POST['profesion']
+        certificado = request.POST['certificado']
+        pais = request.POST['pais']
+        provincia = request.POST['provincia']
+        direccion = request.POST['direccion']
+        correo = request.POST['correo']
+        telefono = request.POST['telefono']
+      
+        persona = DatosPer(
+            apellidos = apellidos,
+            nombres = nombres,
+            profesion = profesion,
+            certificado = certificado,
+            pais = pais,
+            provincia = provincia,
+            direccion = direccion,
+            correo = correo,
+            telefono = telefono
+        )
+
+        persona.save()
+
+        return redirect("lista_gen_personas")
+
+    else:
+
+        return HttpResponse("<h3>No se pudo grabar dato de persona</h3>") 
+
+def create_persona(request):
+
+    return render(request, 'create_persona.html')
+
 
 def personas_gen(request):
 
@@ -368,7 +502,25 @@ def personas_gen(request):
 
     return render(request, 'persona.html',{
         'personas':personas
-    })            
+    })
+
+def borrar_persona(request, id):
+
+    mensaje = ""
+    mensaje1 = ""
+
+    persona = DatosPer.objects.get(pk=id)
+    persona.delete()
+    
+    mensaje = "Se borro registro de persona exitosamente"
+    mensaje1 = "El registro de persona ya no existe en la tabla"
+
+    
+    return render(request, 'persona.html',{
+        'mensaje':mensaje,
+        'mensaje1':mensaje1
+        
+    })                
 
 
 

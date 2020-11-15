@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %} Creacion de Sub Categorias {% endblock %}
+
+{% block content %}
+
+
+<h1 class="title">Formularios en Django | Lcdo Jose Frugone</h1>
+
+<form action="{% url 'grabar_subcategoria' %}" method="POST">
+
+     {% csrf_token %}
+     
+     <label for="name">Titulo</label>
+     <input type="text" name="name" placeholder="Mete tu nombre" />
+
+     <label for="name">Contenido</label>
+     <input type="text" name="description" placeholder="Mete la descripcion" />
+     
+     <input type="submit" value="Guardar" />
+
+
+</form>
+
+
+{% endblock %}

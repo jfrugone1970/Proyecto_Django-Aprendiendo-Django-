@@ -26,14 +26,30 @@
 
                   <li>
                      <h4>{{articulo.id}}. {{articulo.title}}</h4>
+                     <span>{{articulo.created_at}}</span>
+
+                     {% if articulo.public %}
+                        
+                        <strong>Articulo Publicado</strong>
+
+                     {% else %}
+                     
+                        <strong>Articulo Privado</strong> 
+                     {% endif %}
                      <p>
                         {{articulo.content}}
                         <a href="{% url 'borra_articulo' id=articulo.id %}">Eliminar</a>
+                        
                      </p>
                   </li>
+                  <br/>
                {% endfor %}
 
             </ul>
+
+            <p>
+               <a href="{% url 'create' %}">Crear nuevo articulo</a>
+            </p>
 
       {% endif %}
    {% endif %}

@@ -172,6 +172,55 @@ contador-visitas{
 
 }
 
+.box form{
+    width: 50%;
+    background: yellowgreen;
+}
+
+.box form input,
+.box form label{
+    display: block;
+    padding: 5px;
+    padding-left: 0px;
+
+}
+
+.box form input[type="text"],
+.box form textarea,
+.box form select{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.box form select{
+    width: 10%;
+    padding: 5px;
+}
+
+.box form input[type="submit"],
+.box form input[type="button"],
+.box form botton{
+    padding: 10px;
+    margin-top: 5px;
+    background: green;
+    color: white;
+    border: 1px solid black;
+}
+
+.box form input[type="submit"]:hover,
+.box form input[type="button"]:hover,
+.box form button:hover{
+    cursor: pointer;
+    background: rgb(41, 173, 52);
+    transition: 300ms all;
+    padding: 10px;
+    margin-top: 15px;
+    background: aqua;
+    border: 1px solid black;
+    color: white;
+
+}
+
 .box-imagen{
     background: red;
     width: 30%;

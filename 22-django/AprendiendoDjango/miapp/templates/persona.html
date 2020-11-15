@@ -5,17 +5,46 @@
 {% block content %}
 
 <h1 class="title">Listado de Personas</h1>
+
+   {% if mensaje and mensaje1 %}
+
+      <h3><strong>Mensaje de eliminacion :  {{mensaje}} . {{mensaje1}} </strong></h3>
+    
+
+   {% else %}
+
+      <ul>
+         {% for persona in personas %}
+            <li>
+               <p>
+                  <h4><strong>{{persona.pais}} . {{persona.provincia}}</strong></h4> 
+               </p>
+               <br/>
+               <strong>{{persona.id}}  .  {{persona.apellidos}}  .  {{persona.nombres}}</strong>
+               <br/>
+
+               <p><strong> {{persona.profesion}} . {{persona.certificado}} . {{persona.direccion}} . {{persona.correo}} . {{persona.telefono}} </strong></p>
+               <p>
+                           <p><strong>Si decide borrar de un click en eliminar {{persona.apellidos}}  .  {{persona.nombres}}</strong></p>
+                           <a href="{% url 'borrar_persona' id=persona.id %}">Eliminar</a>
+                           
+               </p>
+               
+            </li>
+
+            <br/>
+         {% endfor %}
+      </ul>
+
+      <p>
+         <a href="{% url 'create_persona' %}">Crear nueva persona</a>
+      </p>
+
+
+
+   {% endif %} 
    
-   <ul>
-      {% for persona in personas %}
-         <li>
-            <h4>{{persona.id}}. {{persona.apellidos}} </h4>
-            <p>{{persona.nombres}}.{{persona.pais}}.{{persona.provincia}}.{{persona.profesion}}.{{persona.certificado}}.{{persona.direccion}}.{{persona.correo}}.{{persona.telefono}}</p>
-
-         </li>
-      {% endfor %}
-   </ul>
-
+   
 <!-- Esto es un comentario en html-->
 {% comment 'Esto es un comentario' %}
 

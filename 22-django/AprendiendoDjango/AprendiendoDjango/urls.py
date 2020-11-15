@@ -35,7 +35,7 @@ urlpatterns = [
     path('estudiante/<str:nombre>/<str:apellido>/', views.estudiante, name="estudiante"),
     path('crear-articulo/<str:title>/<str:content>/<str:public>/', views.crear_articulo, name="crea_articulo"),
     path('editar-articulo/<int:id>/<str:name>/<str:description>/', views.editar_articulo, name="editar_articulo"),
-    path('crear-categori/<str:name>/<str:description>/', views.crear_category, name="crea_categoria"),
+    path('crear-categori/<str:name>/<str:description>/', views.crear_categoria, name="crea_categoria"),
     path('editar-categori/<int:id>/<str:name>/<str:description>/', views.editar_categori, name="editar_categori"),
     path('categoria-lista/<str:name>/<str:description>/', views.lista_categori, name="lista_categori"),
     path('crear-subcategori/<str:name>/<str:description>/', views.crear_sub_category, name="crea_subcategori"),
@@ -51,6 +51,15 @@ urlpatterns = [
     path('borrar-categ/<int:id>', views.borrar_categ, name="borrar_categoria"),
     path('subcategorias/', views.subcategori_gen, name="lista_gen_subcate"),
     path('borrar-subcategori/<int:id>', views.borrar_subcategori, name="borrar_subcateri"),
-    path('personas-gen/', views.personas_gen, name="lista_gen_personas")
+    path('personas-gen/', views.personas_gen, name="lista_gen_personas"),
+    path('save-article/', views.save_article, name="grabar"),
+    path('create-article/', views.create_article, name="create"),
+    path('save-categori/', views.save_categoria, name="grabar_categori"),
+    path('create-categori/', views.create_categoria, name="create_categori"),
+    path('save-subcate/', views.save_sub_category, name="grabar_subcategoria"),
+    path('create-subcate/', views.create_subcate, name="create_subcategoria"),
+    path('save-persona/', views.save_persona, name="grabar_persona"),
+    path('create-persona/', views.create_persona, name="create_persona"),
+    path('borrar-persona/<int:id>', views.borrar_persona, name="borrar_persona")
     
 ]

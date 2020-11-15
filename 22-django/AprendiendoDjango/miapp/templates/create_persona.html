@@ -1,0 +1,167 @@
+{% extends 'layout.html' %}
+
+{% block title %} Creacion de Personas {% endblock %}
+
+{% block content %}
+
+
+<h1 class="title">Formularios en Django - Creacion de Persona | Lcdo Jose Frugone</h1>
+
+<form action="{% url 'grabar_persona' %}" method="POST">
+
+     {% csrf_token %}
+     
+     <label for="name">Apellidos</label>
+     <input type="text" name="apellidos" placeholder="Mete tus apellidos" />
+
+     <label for="name">Nombres</label>
+     <input type="text" name="nombres" placeholder="Mete tus nombres" />
+
+     <select name="pais">
+           <option value='Afganistan'>Afganistán</option>
+           <option value='Albania'>Albania</option>
+           <option value='Argelia'>Argelia</option>
+           <option value='Andorra'>Andorra</option>
+           <option value='Angola'>Angola</option>
+           <option value='Anguilla'>Anguilla</option>
+           <option value='Antartida'>Antártida</option>
+           <option value='Antigua y Barbuda'>Antigua y Barbuda</option>
+           <option value='Argentina'>Argentina</option>
+           <option value='Armenia'>Armenia</option>
+           <option value='Aruba'>Aruba</option>
+           <option value='Australia'>Australia</option>
+           <option value='Austria'>Austria</option>
+           <option value='Azerbaiyan'>Azerbaiyán</option>
+           <option value='Bahamas'>Bahamas</option>
+           <option value='Bahrein'>Bahrein</option>
+           <option value='Bangladesh'>Bangladesh</option>
+           <option value='Barbados'>Barbados</option>
+           <option value='Bielorrusia'>Bielorrusia</option>
+           <option value='Bélgica'>Bélgica</option>
+           <option value='Belice'>Belice</option>
+           <option value='Benín'>Benín</option>
+           <option value='Bermudas'>Bermudas</option>
+           <option value='Bután'>Bután</option>
+           <option value='Bolivia'>Bolivia</option>
+           <option value='Bosnia-Herzegovina'>Bosnia-Herzegovina</option>
+           <option value='Botsuana'>Botsuana</option>
+           <option value='Brasil'>Brasil</option>
+           <option value='Brunei Darussalam'>Brunei Darussalam</option>
+           <option value='Bulgaria'>Bulgaria</option>
+           <option value='Burkina Faso'>Burkina Faso</option>
+           <option value='Burundi'>Burundi</option>
+           <option value='Camboya'>Camboya</option>
+           <option value='Camerún'>Camerún</option>
+           <option value='Canadá'>Canadá</option>
+           <option value='Cabo Verde'>Cabo Verde</option>
+           <option value='Islas Caimán'>Islas Caimán</option>
+           <option value='República Centroafricana'>República Centroafricana</option>
+           <option value='Chad'>Chad</option>
+           <option value='Chile'>Chile</option>
+           <option value='China'>China</option>
+           <option value='Isla de Navidad'>Isla de Navidad</option>
+           <option value='Islas Cocos'>Islas Cocos</option>
+           <option value='Colombia'>Colombia</option>
+           <option value='Comores'>Comores</option>
+           <option value='República Democrática del Congo'>República Democrática del Congo</option>
+           <option value='República del Congo'>República del Congo</option>
+           <option value='Islas Cook'>Islas Cook</option>
+           <option value='Costa Rica'>Costa Rica</option>
+           <option value='Costa de Marfil'>Costa de Marfil</option>
+           <option value='Croacia'>Croacia</option>
+           <option value='Cuba'>Cuba</option>
+           <option value='Chipre'>Chipre</option>
+           <option value='República Checa'>República Checa</option>
+           <option value='Dinamarca'>Dinamarca</option>
+           <option value='Djibouti'>Djibouti</option>
+           <option value='Dominica'>Dominica</option>
+           <option value='Dominicana, República'>Dominicana, República</option>
+           <option value='Timor Oriental'>Timor Oriental</option>
+           <option value='Ecuador'>Ecuador</option>
+           <option value='Egipto'>Egipto</option>
+           <option value='El Salvador'>El Salvador</option>
+           <option value='Guinea Ecuatorial'>Guinea Ecuatorial</option>
+           <option value='Eritrea'>Eritrea</option>
+           <option value='Estonia'>Estonia</option>
+           <option value='Etiopía'>Etiopía</option>
+           <option value='Islas Malvinas'>Islas Malvinas</option>
+           <option value='Islas Feroe'>Islas Feroe</option>
+           <option value='Fiyi'>Fiyi</option>
+           <option value='Finlandia'>Finlandia</option>
+           <option value='Francia'>Francia</option>
+           <option value='Guayana Francesa'>Guayana Francesa</option>
+           <option value='Polinesia Francesa'>Polinesia Francesa</option>
+           <option value='Tierras Australes y Fran'>Tierras Australes y Fran</option>
+           <option value='Gabón'>Gabón</option>
+           <option value='Gambia'>Gambia</option>
+           <option value='Georgia'>Georgia</option>
+           <option value='Alemania'>Alemania</option>
+           <option value='Ghana'>Ghana</option>
+           <option value='Gibraltar'>Gibraltar</option>
+           <option value='Grecia'>Grecia</option>
+           <option value='Groenlandia'>Groenlandia</option>
+           <option value='Granada'>Granada</option>
+           <option value='Guadalupe'>Guadalupe</option>
+           <option value='Guam'>Guam</option>
+           <option value='Guatemala'>Guatemala</option>
+           <option value='República Guinea'>República Guinea</option>
+           <option value='Guinea Bissau'>Guinea Bissau</option>
+           <option value='Guyana'>Guyana</option>
+           <option value='Haiti'>Haiti</option>
+           <option value='Honduras'>Honduras</option>
+           <option value='Hong Kong'>Hong Kong</option>
+           <option value='Hungría'>Hungría</option>
+           <option value='Islandia'>Islandia</option>
+           <option value='India'>India</option>
+           <option value='Indonesia'>Indonesia</option>
+           <option value='Irán'>Irán</option>
+           <option value='Iraq'>Iraq</option>
+           <option value='Irlanda'>Irlanda</option>
+           <option value='Israel'>Israel</option>
+           <option value='Italia'>Italia</option>
+           <option value='Jamaica'>Jamaica</option>
+           <option value='Japón'>Japón</option>
+           <option value='Jordania'>Jordania</option>
+           <option value='Kazajstán'>Kazajstán</option>
+           <option value='Kenia'>Kenia</option>
+           <option value='Kiribati'>Kiribati</option>
+           <option value='Corea del Norte'>Corea del Norte</option>
+           <option value='Corea del Sur'>Corea del Sur</option>
+           <option value='Kosovo'>Kosovo</option>
+           <option value='Kuwait'>Kuwait</option>
+           <option value='Kirguistán'>Kirguistán</option>
+           <option value='Laos'>Laos</option>
+           <option value='Letonia'>Letonia</option>
+           <option value='Líbano'>Líbano</option>
+           <option value='Lesotho'>Lesotho</option>
+           <option value='Liberia'>Liberia</option>
+           <option value='Libia'>Libia</option>
+           <option value='Liechtenstein'>Liechtenstein</option>
+           <option value='Lituania'>Lituania</option>
+           <option value='Luxemburgo'>Luxemburgo</option>
+     </select>
+     <label for="name">Provincia</label> 
+     <input type="text" name="provincia" placeholder="Ingrese su provincia" />
+
+     <label for="name">Direccion</label>
+     <input type="text" name="direccion" placeholder="direccion" />
+
+     <label for="name">Correo</label>
+     <input type="text" name="correo" placeholder="correo" />
+
+     <label for="name">Telefono</label>
+     <input type="text" name="telefono" placeholder="Ingrese telefono" />
+
+     <label for="name">Profesion</label>
+     <input type="text" name="profesion" placeholder="Ingrese profesion" />
+
+     <label for="name">Certificado</label>
+     <textarea name="certificado" placeholder="Mete info certfi"></textarea>
+     
+     <input type="submit" value="Guardar" />
+
+
+</form>
+
+
+{% endblock %}
