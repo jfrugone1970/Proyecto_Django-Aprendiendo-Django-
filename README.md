@@ -1463,86 +1463,622 @@ al ejecutar el proyecto WEB aparece de la siguiente manera:
   <img src ="Django_dbase (Order by_registros).jpg" />
 </p>
 
+Formularios (creacion de vistas y URL's).-
+Para la creacion de formularios vamos a crear dos vistas mas en el archivo views.py de la aplicacion miapp que se llama "save_article" y la vista "create_article", en la vista save_article va a tener las acciones para grabar datos con un registro en la tabla "Article" en la base de datos de SQLite, y tenemos la siguiente vista:
+
+def save_article(request):
+
+    if request.method == "POST":
+
+        title = request.POST['title']
+        content = request.POST['content']
+        public = request.POST['public']
+       
+        articulos = Article(
+            title = title,
+            content = content,
+            public = public
+        )
+
+        articulos.save()
+
+        return redirect('lista_gen_art')
+
+    
+    
+    else:
+
+        return HttpResponse("<h2>No se ha podido grabar articulo</h2>")
+
+Y con la vista "create_article", lo que hace es llamar a un template que llama a un archivo "create_article.html", con el metodo render de django que llama al archivo y asi tenemos:
+
+def create_article(request):
+
+    return render(request, 'create_article.html')
+    
+Las rutas especificas de las vistas estan definidas en el archivo de ruta "urls.py" de django que tenemos:
+
+"""AprendiendoDjango URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path
+
+# importar mi app con mi vista
+from miapp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.index, name="index"),
+    path('inicio/', views.index, name="inicio"),
+    path('inicio/<str:nombre>',views.index, name="inicio"),
+    path('hola-mundo/', views.hola_mundo, name="hola_mundo"),
+    path('paginas-pruebas/', views.pagina, name="pagina"),
+    path('paginas-pruebas/<int:redirigir>', views.pagina, name="pagina"),
+    path('contacto/', views.contacto, name="contacto"),
+    path('contacto/<str:profesion>/<str:nombre>', views.contacto, name="contacto"),
+    path('contacto/<str:profesion>/<str:nombre>/<str:apellido>', views.contacto, name="contacto"),
+    path('estudiante/', views.estudiante, name="estudiante"),
+    path('estudiante/<str:nombre>', views.estudiante, name="estudiante"),
+    path('estudiante/<str:nombre>/<str:apellido>/', views.estudiante, name="estudiante"),
+    path('crear-articulo/<str:title>/<str:content>/<str:public>/', views.crear_articulo, name="crea_articulo"),
+    path('editar-articulo/<int:id>/<str:name>/<str:description>/', views.editar_articulo, name="editar_articulo"),
+    path('crear-categori/<str:name>/<str:description>/', views.crear_category, name="crea_categoria"),
+    path('editar-categori/<int:id>/<str:name>/<str:description>/', views.editar_categori, name="editar_categori"),
+    path('categoria-lista/<str:name>/<str:description>/', views.lista_categori, name="lista_categori"),
+    path('crear-subcategori/<str:name>/<str:description>/', views.crear_sub_category, name="crea_subcategori"),
+    path('editar-subcategori/<int:id>/<str:name>/<str:description>/', views.editar_subcategoria, name="editar_subcategori"),
+    path('subcategori-lista/<str:name>/<str:description>/', views.lista_subcategory, name="lista_subcategori"),
+    path('mostrar-articulo/<str:title>/<str:content>/', views.articulo, name="mostrar"),
+    path('crea-persona/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/',views.persona, name="persona"),
+    path('editar-persona/<int:id>/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/', views.editar_persona, name="editar_persona"),
+    path('lista/<str:apellidos>/<str:nombres>/<str:pais>/<str:provincia>/', views.lista_persona, name="mostrar_p"),
+    path('articulos/', views.articulo_gen, name="lista_gen_art"),
+    path('borrar-articulo/<int:id>', views.borrar_articulos, name="borra_articulo"),
+    path('categorias/', views.categoria_gen, name="lista_gen_cat"),
+    path('borrar-categ/<int:id>', views.borrar_categ, name="borrar_categoria"),
+    path('subcategorias/', views.subcategori_gen, name="lista_gen_subcate"),
+    path('borrar-subcategori/<int:id>', views.borrar_subcategori, name="borrar_subcateri"),
+    path('personas-gen/', views.personas_gen, name="lista_gen_personas"),
+    path('save-article/', views.save_article, name="grabar"),
+    path('create-article/', views.create_article, name="create")
+    
+]
+
+tenemos las rutas ("saves-article", y la ruta "create-article"), que define las rutas de la vista
+
+Formulario HTML.- Vamos a definir el formulario del template "create_article.html" que esta dentro de la carpeta templates en el archivo "create_article.html", que el formulario va a definir de la misma manera como se define un formulario como en un archivo "*.html" de una pagina WEB
+tenemos el siguiente codigo:
+
+{% extends 'layout.html' %}
+
+{% block title %} Mi Pagina de Pruebas {% endblock %}
 
+{% block content %}
 
 
+<h1 class="title">Formularios en Django | Lcdo Jose Frugone</h1>
 
+<form action="{% url 'grabar' %}" method="POST">
 
+     {% csrf_token %}
+     
+     <label for="name">Titulo</label>
+     <input type="text" name="title" placeholder="Mete tu nombre" />
 
+     <label for="name">Contenido</label>
+     <textarea name="content" placeholder="Mete el contenido"></textarea>
 
+     <label for="public">Publicado?</label>
+     <select name="public">
+           <option value="1">Si</option>
+           <option value="0">No</option>
+     </select>
 
+     <input type="submit" value="Guardar" />
 
 
+</form>
 
 
+{% endblock %}
 
+Mayor informacion de formularios en Django tenemos el siguiente link:
+https://docs.djangoproject.com/en/3.1/intro/tutorial04/
 
+Estilos del formulario.- Para los estilos del Formulario modificamos el archivo styles.css, que esta en la carpeta /static/css especificando lo siguiente en los estilos
 
+.box form{
+    width: 50%;
+    background: yellowgreen;
+}
 
+.box form input,
+.box form label{
+    display: block;
+    padding: 5px;
+    padding-left: 0px;
 
+}
 
+.box form input[type="text"],
+.box form textarea,
+.box form select{
+    width: 100%;
+    margin-bottom: 10px;
+}
 
+.box form select{
+    width: 10%;
+    padding: 5px;
+}
 
+.box form input[type="submit"],
+.box form input[type="button"],
+.box form botton{
+    padding: 10px;
+    margin-top: 5px;
+    background: green;
+    color: white;
+    border: 1px solid black;
+}
 
+.box form input[type="submit"]:hover,
+.box form input[type="button"]:hover,
+.box form button:hover{
+    cursor: pointer;
+    background: rgb(41, 173, 52);
+    transition: 300ms all;
+    padding: 10px;
+    margin-top: 15px;
+    background: aqua;
+    border: 1px solid black;
+    color: white;
 
+}
 
+Tendriamos asi la hoja ded estilos
 
+/* Estilos generales */
 
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif, Arial, Helvetica;
+    text-decoration: none;
+}
 
+body{
+    background-color: #F2F2F2;
 
+}
+
+p, h2, h3, ul{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+}
 
+ul, ol{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
 
+/* Estilos cabecera */
 
+header{
+    width: 1212px;
+    height: 140px;
+    background-color: #232828;
+    margin: 0px auto;
 
+}
 
+#logotigo{
+    width: 60%;
+    height: 140px;
+    margin: 0px auto;
+    padding-top: 10px;
 
+}
 
+#logotipo img{
+    display: block;
+    width: 60px;
+    float: left;
+    margin-top: 20px;
+
+
+}
 
+#logotipo h1{
+    display: block;
+    float: left;
+    letter-spacing: 2px;
+    margin-top: 45px;
+    margin-left: 20px;
+    font-weight: lighter;
+    color: #145e30 
+}
+
+/* Estilos barra de navegacion */
 
+nav{
+    width: 1250px;
+    height: 40px;
+    background-color: #1B1E1F;
+    border: 1px solid #333333;
+    margin: 0 auto;
+    margin-bottom: 45px;
+    box-shadow: 0px 22px 22px gray;
+    font-size: 13px;
+
+}
 
+nav ul{
+    list-style: none;
+    text-decoration: none;
 
+}
+
+nav ul li{
+    line-height: 40px;
+    float: left;
+    
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+nav ul li a{
+    display: block;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #d1d4d6;
+
+
+}
+
+nav ul li a:hover{
+    background: #145e30;
+    box-shadow: 0px 0px 5px #333333 inset;
+    color: white;
+    transition: all 300ms;
+}
+
+/* Contador de visitas */
+contador-visitas{
+    display: block;
+    width: 20%;
+    height: 120px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 0 auto;
+    float: right;
+
+}
+
+
+
+.barra{
+    width: 1250px;
+    margin: 0 auto;
+   
+ 
+   
+}
+
+.esquina-izquierda{
+    display: block;
+    border-left: 20px solid transparent;
+    border-top: 10px solid #2B2F30;
+    float: left;
+
+}
+
+.esquina-derecha{
+    display: block;
+    border-right: 20px solid transparent;
+    border-top: 10px solid #2B2F30;
+    float: right;
+    
+}
+
+.relleno-barra{
+    display: block;
+    width: 1210px;
+    background: #282F30;
+    height: 10px;
+    float: left;
+
+}
+
+/* Estilos al contenido central */
+
+#content{
+    width: 1212px;
+    min-height: 500px;
+    margin: 0px auto;
+    margin-bottom: 30px;
+    margin-top: 40px;
+
+}
+
+.box{
+    background: white;
+    width: 100%;
+    min-height: 930px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    margin: 0 auto;
+
+
+}
+
+.box form{
+    width: 50%;
+    background: yellowgreen;
+}
+
+.box form input,
+.box form label{
+    display: block;
+    padding: 5px;
+    padding-left: 0px;
+
+}
+
+.box form input[type="text"],
+.box form textarea,
+.box form select{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.box form select{
+    width: 10%;
+    padding: 5px;
+}
+
+.box form input[type="submit"],
+.box form input[type="button"],
+.box form botton{
+    padding: 10px;
+    margin-top: 5px;
+    background: green;
+    color: white;
+    border: 1px solid black;
+}
+
+.box form input[type="submit"]:hover,
+.box form input[type="button"]:hover,
+.box form button:hover{
+    cursor: pointer;
+    background: rgb(41, 173, 52);
+    transition: 300ms all;
+    padding: 10px;
+    margin-top: 15px;
+    background: aqua;
+    border: 1px solid black;
+    color: white;
+
+}
+
+.box-imagen{
+    background: red;
+    width: 30%;
+    height: 100px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    margin: 0 auto;
+
+}
+
+.box mapa-lugar{
+    width: 40%;
+    height: 300px;
+    padding: 20px;
+    border: 1px solid #145e30;
+    border-radius: 2px;
+    margin: 0 auto;
+}
+
+.box mapa-lugar iframe{
+    width: 40%;
+    height: 200px;
+    padding: 20px;
+    border: 1px solid #145e30;
+    border-radius: 2px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin: 0 auto;
+}
+
+.box-imagen img{
+    width: 100%;
+    height: 100px;
+    float: left;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+}
+
+.title{
+    color: #444;
+    letter-spacing: 1px;
+    font-size: 30px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+aside{
+    float: right;
+    width: 20%;
+    padding: 20px;
+    min-height: 100px;
+    margin: 0 auto;
+    background: orange;
+}
+
+/* Dando estilo al pie de pagina */
+
+footer{
+    width: 1250px;
+    background-color: #181E1F;
+    border: 1px solid #333;
+    color: #d1d4d6;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    box-shadow: 0px 0px 20px gray;
+
+
+}
+
+Recibir datos del formulario por POST.- Para trabajar con formularios es mucho mas correcto trabajar con POST, ya que la diferencia es clara si se envia datos por GET los datos pasan por la url's y en ocasiones es necesarios que no se visualicen los datos por la ur's, la forma de recibir la informacion es muy diferente en vez de utilizar la propiedad GET, se utiliza la propiedad POST, tenemos por ejemplo en la carpeta del proyecto /templates el archivo que se llama "create_article.html", la forma de enviar los datos del formulario es por medio de POST, y esta definido asi:
+
+{% extends 'layout.html' %}
+
+{% block title %} Mi Pagina de Pruebas {% endblock %}
+
+{% block content %}
+
+
+<h1 class="title">Formularios en Django | Lcdo Jose Frugone</h1>
+
+<form action="{% url 'grabar' %}" method="POST">
+
+     {% csrf_token %}
+     
+     <label for="name">Titulo</label>
+     <input type="text" name="title" placeholder="Mete tu nombre" />
+
+     <label for="name">Contenido</label>
+     <textarea name="content" placeholder="Mete el contenido"></textarea>
+
+     <label for="public">Publicado?</label>
+     <select name="public">
+           <option value="1">Si</option>
+           <option value="0">No</option>
+     </select>
+
+     <input type="submit" value="Guardar" />
+
+
+</form>
+
+
+{% endblock %}
+
+en este caso en la url busca como name de un path una url en mi caso que se llama "grabar", en el archivo del proyecto de Django "AprendiendoDjango" que se llama "urls.py" esa urls que tenemos el archivo:
+
+"""AprendiendoDjango URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path
+
+# importar mi app con mi vista
+from miapp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.index, name="index"),
+    path('inicio/', views.index, name="inicio"),
+    path('inicio/<str:nombre>',views.index, name="inicio"),
+    path('hola-mundo/', views.hola_mundo, name="hola_mundo"),
+    path('paginas-pruebas/', views.pagina, name="pagina"),
+    path('paginas-pruebas/<int:redirigir>', views.pagina, name="pagina"),
+    path('contacto/', views.contacto, name="contacto"),
+    path('contacto/<str:profesion>/<str:nombre>', views.contacto, name="contacto"),
+    path('contacto/<str:profesion>/<str:nombre>/<str:apellido>', views.contacto, name="contacto"),
+    path('estudiante/', views.estudiante, name="estudiante"),
+    path('estudiante/<str:nombre>', views.estudiante, name="estudiante"),
+    path('estudiante/<str:nombre>/<str:apellido>/', views.estudiante, name="estudiante"),
+    path('crear-articulo/<str:title>/<str:content>/<str:public>/', views.crear_articulo, name="crea_articulo"),
+    path('editar-articulo/<int:id>/<str:name>/<str:description>/', views.editar_articulo, name="editar_articulo"),
+    path('crear-categori/<str:name>/<str:description>/', views.crear_categoria, name="crea_categoria"),
+    path('editar-categori/<int:id>/<str:name>/<str:description>/', views.editar_categori, name="editar_categori"),
+    path('categoria-lista/<str:name>/<str:description>/', views.lista_categori, name="lista_categori"),
+    path('crear-subcategori/<str:name>/<str:description>/', views.crear_sub_category, name="crea_subcategori"),
+    path('editar-subcategori/<int:id>/<str:name>/<str:description>/', views.editar_subcategoria, name="editar_subcategori"),
+    path('subcategori-lista/<str:name>/<str:description>/', views.lista_subcategory, name="lista_subcategori"),
+    path('mostrar-articulo/<str:title>/<str:content>/', views.articulo, name="mostrar"),
+    path('crea-persona/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/',views.persona, name="persona"),
+    path('editar-persona/<int:id>/<str:apellidos>/<str:nombres>/<str:profesion>/<str:certificado>/<str:pais>/<str:provincia>/<str:direccion>/<str:correo>/<str:telefono>/', views.editar_persona, name="editar_persona"),
+    path('lista/<str:apellidos>/<str:nombres>/<str:pais>/<str:provincia>/', views.lista_persona, name="mostrar_p"),
+    path('articulos/', views.articulo_gen, name="lista_gen_art"),
+    path('borrar-articulo/<int:id>', views.borrar_articulos, name="borra_articulo"),
+    path('categorias/', views.categoria_gen, name="lista_gen_cat"),
+    path('borrar-categ/<int:id>', views.borrar_categ, name="borrar_categoria"),
+    path('subcategorias/', views.subcategori_gen, name="lista_gen_subcate"),
+    path('borrar-subcategori/<int:id>', views.borrar_subcategori, name="borrar_subcateri"),
+    path('personas-gen/', views.personas_gen, name="lista_gen_personas"),
+    path('save-article/', views.save_article, name="grabar"),
+    path('create-article/', views.create_article, name="create"),
+    path('save-categori/', views.save_categoria, name="grabar_categori"),
+    path('create-categori/', views.create_categoria, name="create_categori"),
+    path('save-subcate/', views.save_sub_category, name="grabar_subcategoria"),
+    path('create-subcate/', views.create_subcate, name="create_subcategoria"),
+    path('save-persona/', views.save_persona, name="grabar_persona"),
+    path('create-persona/', views.create_persona, name="create_persona"),
+    path('borrar-persona/<int:id>', views.borrar_persona, name="borrar_persona")
+    
+]
+
+que si examinas determinadamente el name('grabar') tiene como ruta una ruta("save-article/"), que llama a la vista save_article, dentro de la aplicacion miapp, en el archivo "views.py", se tiene la vista ('save_article'), la forma de recoger los datos del formulario es evaluar si la forma de enviar los datos es por medio del metodo "POST", y en cada variable asignamos, por medio de POST, el contenido de cada campo del formulario.
+
+def save_article(request):
+
+    if request.method == "POST":
+
+        title = request.POST['title']
+        content = request.POST['content']
+        public = request.POST['public']
+       
+        articulos = Article(
+            title = title,
+            content = content,
+            public = public
+        )
+
+        articulos.save()
+
+        return redirect('lista_gen_art')
+
+    
+    
+    else:
+
+        return HttpResponse("<h2>No se ha podido grabar articulo</h2>")
+        
+   A continuacion como se muestra el formulario de articulos de Django del proyecto
+   
+   
+   <p align="center">
+       <img src ="Django_formularios (articulos).jpg" />
+   </p>     
 
