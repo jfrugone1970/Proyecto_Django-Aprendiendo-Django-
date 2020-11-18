@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %} Mi Pagina de Pruebas {% endblock %}
+
+{% block content %}
+
+
+<h1 class="title">Formularios en Django | Lcdo Jose Frugone</h1>
+
+<form action="{% url 'create_full_subcate' %}" method="POST">
+
+     {% csrf_token %}
+     
+     {{ form.as_p }}
+
+     
+     <input type="submit" value="Guardar" />
+
+
+</form>
+
+
+{% endblock %}

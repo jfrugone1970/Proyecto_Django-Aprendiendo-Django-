@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from miapp.models import Article, Category, SubCategory, DatosPer
 from django.db.models import Q
+from miapp.forms import formArticulo, formCategory, formSubCate
 
 # Create your views here.
 # MVC - Modelo Vista Controlador -> Acciones(metodos)
@@ -168,6 +169,42 @@ def create_article(request):
 
     return render(request, 'create_article.html')
 
+def create_full_article(request):
+
+    if request.method == 'POST':
+
+        formulario = formArticulo(request.POST)
+
+        if formulario.is_valid():
+            datos_form = formulario.cleaned_data
+
+            title = datos_form.get('title')
+            content = datos_form.get('content')
+            public = datos_form.get('public')
+
+            articulos = Article(
+                title = title,
+                content = content,
+                public = public
+            )
+
+            articulos.save()
+            
+            return redirect('lista_gen_art')
+
+        else:
+
+            return HttpResponse("<h2> Formulario invalido </h2>")    
+
+
+    else:
+
+        formulario = formArticulo()
+
+        return render(request, 'create_full_article.html',{
+            'form':formulario
+        })    
+
 
 def editar_articulo(request, id, title, content, public):
 
@@ -218,6 +255,42 @@ def save_categoria(request):
 
         return HttpResponse("<h2>No se ha podido grabar articulo</h2>")
 
+def create_full_category(request):
+
+    if request.method == 'POST':
+
+        formulario = formCategory(request.POST)
+        
+        if formulario.is_valid():
+            datos_form = formulario.cleaned_data
+
+            name = datos_form.get('name')
+            description = datos_form.get('description')
+
+            categoria = Category(
+                name = name,
+                description = description
+            )
+
+            categoria.save()
+
+            return redirect('lista_gen_cat')
+
+        else:
+
+            return HttpResponse("<h2> Formulario invalido </h2>")    
+
+
+    else:
+
+        formulario = formCategory()
+        
+        return render(request, 'create_full_category.html',{
+            'form':formulario
+        })    
+
+
+
 
 def create_categoria(request):
 
@@ -262,6 +335,43 @@ def crear_sub_category(request, name, description):
     subcategori.save()
 
     return HttpResponse(f"<h2> Subcategoria : {subcategori.id} - {subcategori.name} - {subcategori.descripcion} se grabo exitosamene </h2>")
+
+def create_full_subcate(request):
+
+    if request.method == 'POST':
+
+        formulario = formSubCate(request.POST)
+        
+        if formulario.is_valid():
+            datos_form = formulario.cleaned_data
+
+            name = datos_form.get('name')
+            description = datos_form.get('description')
+
+            subcategoria = SubCategory(
+                name = name,
+                description = description
+            )
+
+            subcategoria.save()
+            
+            return redirect('lista_gen_subcate')
+
+        else:
+
+            return HttpResponse("<h2> Formulario invalido </h2>")    
+
+
+    else:
+
+        formulario = formSubCate()
+        
+        return render(request, 'create_full_subcategory.html',{
+            'form':formulario
+        })    
+
+
+
 
 
 def save_sub_category(request):
@@ -381,7 +491,7 @@ def articulo(request, title, content):
 
 def articulo_gen(request):
 
-    articulos = Article.objects.order_by("title")
+    articulos = Article.objects.order_by("id")
 
    
     return render(request, 'articulos.html',{

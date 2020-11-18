@@ -60,6 +60,9 @@ urlpatterns = [
     path('create-subcate/', views.create_subcate, name="create_subcategoria"),
     path('save-persona/', views.save_persona, name="grabar_persona"),
     path('create-persona/', views.create_persona, name="create_persona"),
-    path('borrar-persona/<int:id>', views.borrar_persona, name="borrar_persona")
+    path('borrar-persona/<int:id>', views.borrar_persona, name="borrar_persona"),
+    path('create-full-article/', views.create_full_article, name='create_full'),
+    path('create-full-category/', views.create_full_category, name='create_full_cate'),
+    path('create-full-subcate/', views.create_full_subcate, name='create_full_subcate')
     
 ]
