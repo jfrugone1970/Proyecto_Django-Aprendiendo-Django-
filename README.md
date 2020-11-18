@@ -2080,5 +2080,116 @@ def save_article(request):
    
    <p align="center">
        <img src ="Django_formularios (articulos).jpg" />
-   </p>     
+   </p> 
+   
+   Formularios basados en clases.- Ya hemos hechos formularios en Django con la etiqueta <form>....</form> de HTML y los elementos de html para los formularios que no esta mal pero tambien hay una manera de realizar formularios basados en clases, la forma de recoger los datos del formulario en clase es la misma pero mucho mas estructura y es la forma de trabajar formularios en Django a raiz de la aplicacion "miapp" se va a crear un archivo que se llama 'forms.py' que se va a definir los formularios pero por clases, que es como la forma de cuando se crean los modelos que es muy similar, para crear un formulario basado en clases hay que importar el modulo forms de django asi de esta manera from django import forms
+   
+   
+   from django import forms
+
+class formArticulo(forms.Form):
+
+    title = forms.CharField(
+        label = "Titulo",
+        max_length=200,
+        required=True
+    )
+
+    content = forms.CharField(
+        label = "Content",
+        widget=forms.Textarea,
+        required=True
+    )
+
+    public_options = [
+        (1, 'Si'),
+        (0, 'No')
+    ]
+
+    public = forms.TypedChoiceField(
+        label = "Publicado?",
+        choices = public_options,
+        required=True
+                
+    )
+    
+    
+    Como se sabe que esta clase herreda de un formulario cuando luego de la definicion de la clase formulario con el nombre luego con class class formArticulo(forms.Form) 'va el nombre del metodo con la propiedad Form'; es decir que hereda de un formulario
+    
+    Si observas la clase formArticulo, se define los diferentes campos del formulario, luego con sus tipos de campos que tiene forms.Charfield, con sus propiedades
+    
+    En el archivo "views.py", vamos a definir la vista para porder manejar la clase formArticulo, que nos va a llamar a un template que se llama "create_full_article.html", asi de esta manera:
+    
+    def create_full_article(request):
+
+    if request.method == 'POST':
+
+        formulario = formArticulo(request.POST)
+
+        if formulario.is_valid():
+            datos_form = formulario.cleaned_data
+
+            title = datos_form.get('title')
+            content = datos_form.get('content')
+            public = datos_form.get('public')
+
+            articulos = Article(
+                title = title,
+                content = content,
+                public = public
+            )
+
+            articulos.save()
+            
+            return redirect('lista_gen_art')
+
+        else:
+
+            return HttpResponse("<h2> Formulario invalido </h2>")    
+
+
+    else:
+
+        formulario = formArticulo()
+
+        return render(request, 'create_full_article.html',{
+            'form':formulario
+        })    
+
+pero para hacer uso de la vista 'create_full_artcicle' en el archivo "views.py" antes indicado en la parte de arriba se tiene que importar la clase formArticulo (la clase articulo que va a definir nuestro formulario), asi
+
+from miapp.forms import formArticulo
+
+En la carpeta de templates de la aplicacion miapp esta creado un archivo que se llama 'create_full_article.html', de esta manera:
+
+{% extends 'layout.html' %}
+
+{% block title %} Mi Pagina de Pruebas {% endblock %}
+
+{% block content %}
+
+
+<h1 class="title">Formularios en Django | Lcdo Jose Frugone</h1>
+
+<form action="{% url 'create_full' %}" method="POST">
+
+     {% csrf_token %}
+     
+     {{ form.as_p }}
+
+     
+     <input type="submit" value="Guardar" />
+
+
+</form>
+
+
+{% endblock %}
+
+en el codigo que vez para mostrar el formulario y el conjunto de campos en concreto debes de utlizar {{ form.as_p }}
+
+   
+<p align="center">
+  <img src ="Django_formularios_clase(articulos).jpg" />
+</p>
 
