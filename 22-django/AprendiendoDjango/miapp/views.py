@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from miapp.models import Article, Category, SubCategory, DatosPer
 from django.db.models import Q
-from miapp.forms import formArticulo, formCategory, formSubCate
+from miapp.forms import formArticulo, formCategory, formSubCate, formPersona
+from django.contrib import messages
 
 # Create your views here.
 # MVC - Modelo Vista Controlador -> Acciones(metodos)
@@ -156,6 +157,9 @@ def save_article(request):
 
         articulos.save()
 
+        # Crear mensaje de flash que solo se muestra una sola vez
+        messages.success(request, f'Has creado correctamente el articulo {articulos.id}')
+
         return redirect('lista_gen_art')
 
     
@@ -243,9 +247,13 @@ def save_categoria(request):
         categorias = Category(
             name = name,
             description = description
-        ) 
+        )
 
+        
         categorias.save()
+
+        # Crear mensaje de flash que solo se muestra una sola vez
+        messages.success(request, f'Has creado correctamente la categoria {categorias.id}')
 
         return redirect('lista_gen_cat')
 
@@ -388,6 +396,9 @@ def save_sub_category(request):
         )
 
         subcategori.save()
+
+        # Crear mensaje de flash que solo se muestra una sola vez
+        messages.success(request, f'Has creado correctamente la subcategoria {subcategori.id}')
 
         return redirect("lista_gen_subcate")
 
@@ -595,6 +606,9 @@ def save_persona(request):
 
         persona.save()
 
+        # Crear mensaje de flash que solo se muestra una sola vez
+        messages.success(request, f'Has creado correctamente la persona {persona.id}')
+
         return redirect("lista_gen_personas")
 
     else:
@@ -604,6 +618,59 @@ def save_persona(request):
 def create_persona(request):
 
     return render(request, 'create_persona.html')
+
+def create_full_persona(request):
+
+    if request.method == 'POST':
+
+        formulario = formPersona(request.POST)
+        
+        if formulario.is_valid():
+            datos_form = formulario.cleaned_data
+
+            apellidos = datos_form.get('apellidos')
+            nombres = datos_form.get('nombres')
+            pais = datos_form.get('pais')
+            provincia = datos_form.get('provincia')
+            direccion = datos_form.get('direccion')
+            correo = datos_form.get('correo')
+            telefono = datos_form.get('telefono')
+            profesion = datos_form.get('profesion')
+            certificado = datos_form.get('certificado')
+
+
+            persona = DatosPer(
+                apellidos = apellidos,
+                nombres = nombres,
+                pais = pais,
+                provincia = provincia,
+                direccion = direccion,
+                correo = correo,
+                telefono = telefono,
+                profesion = profesion,
+                certificado = certificado
+            )
+
+            persona.save()
+
+            
+            return redirect('lista_gen_personas')
+
+        else:
+
+            return HttpResponse("<h2> Formulario invalido </h2>")    
+
+
+    else:
+
+        formulario = formPersona()
+
+        
+        return render(request, 'create_full_persona.html',{
+            'form':formulario
+        })    
+
+
 
 
 def personas_gen(request):

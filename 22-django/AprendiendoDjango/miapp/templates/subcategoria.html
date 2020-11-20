@@ -6,6 +6,18 @@
 
 <h1 class="title">Listado de Subcategorias</h1>
 
+   {% if messages %}
+
+      {% for message in messages %}
+         
+          <div class="message">
+              {{message}}
+          </div>
+
+      {% endfor %}
+
+   {% endif %}
+
    {% if mensaje1 and mensaje %}
 
       <h3>{{mensaje1}}</h3>

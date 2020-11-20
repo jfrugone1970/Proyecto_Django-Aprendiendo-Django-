@@ -223,6 +223,21 @@ contador-visitas{
 
 }
 
+.rojo{
+    color: red;
+    text-shadow: 0px 0px 4px black;
+}
+
+.message{
+    padding: 20px;
+    margin-top: 5px;
+    background: green;
+    border: 1px solid #444;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 .box-imagen{
     background: red;
     width: 30%;

@@ -10,12 +10,12 @@
 {% if form.errors %}
    
    <strong class="rojo">
-      Hay errores en el formulario
+      <p>Hay errores en el formulario</p>
    </strong>
 
 {% endif %}
 
-<form action="{% url 'create_full' %}" method="POST">
+<form action="{% url 'create_persona_full' %}" method="POST">
 
      {% csrf_token %}
      
