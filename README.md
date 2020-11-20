@@ -2193,3 +2193,127 @@ en el codigo que vez para mostrar el formulario y el conjunto de campos en concr
   <img src ="Django_formularios_clase(articulos).jpg" />
 </p>
 
+Mensajes Flash (Sesiones flash).-
+Imaginate que terminas de grabar un articulo y haces una redireccion a articulos (a la lista de articulos), que desees mostrar un mensaje que diga 'Has guardado el articulo satisfactoriamente y muestra el id del articulo que has guardado', pero estos mensajes desean que se mantengan una sola vez alli y luego se vaya el mensaje para esto se usa las sesiones flash que es un concepto que se usa en django permiten en tu pagina WEB crear una sesion que dure una sola vez que se muestra esta sesion y se borra para poder utilizar estas sesiones de flash en la parte de arriba del archivo 'views.py' del proyecto de Django hay que importar el paquete messages de Django de esta manera
+
+from django.contrib import messages y dentro de las vistas 'save_article, save_categoria, save_sub_category, save_persona' luego de grabar y antes de enviar la redireccion al templates respectivo para mostrar los datos, ponemos, por ejemplo:
+
+def save_article(request):
+
+    if request.method == "POST":
+
+        title = request.POST['title']
+        content = request.POST['content']
+        public = request.POST['public']
+       
+        articulos = Article(
+            title = title,
+            content = content,
+            public = public
+        )
+
+        articulos.save()
+
+        # Crear mensaje de flash que solo se muestra una sola vez
+        messages.success(request, f'Has creado correctamente el articulo {articulos.id}')
+
+        return redirect('lista_gen_art')
+
+    
+    
+    else:
+
+        return HttpResponse("<h2>No se ha podido grabar articulo</h2>")
+
+Para mostrar el mensaje vamos a usar para estar vez de la carpeta templates/, el archivo 'articulos.html', de la siguiente manera:
+
+{% extends 'layout.html' %}
+
+{% block title %} {{titulo}} {% endblock %}
+
+{% block content %}
+
+<h1 class="title">Listado de Articulos</h1>
+
+   {% if messages %}
+
+      {% for message in messages %}
+         
+          <div class="message">
+              {{message}}
+          </div>
+
+      {% endfor %}
+
+   {% endif %}
+
+   {% if mensaje1 and mensaje %}
+
+      <h3>{{mensaje1}}</h3>
+
+      <br/>
+
+      <h4>{{mensaje}}</h4>
+
+   {% else %}
+   
+      {% if articulos %}
+
+            <h3><p>Listado de articulos</p><h3>
+
+            <ul>
+
+               {% for articulo in articulos %}
+
+                  <li>
+                     <h4>{{articulo.id}}. {{articulo.title}}</h4>
+                     <span>{{articulo.created_at}}</span>
+
+                     {% if articulo.public %}
+                        
+                        <strong>Articulo Publicado</strong>
+
+                     {% else %}
+                     
+                        <strong>Articulo Privado</strong> 
+                     {% endif %}
+                     <p>
+                        {{articulo.content}}
+                        <a href="{% url 'borra_articulo' id=articulo.id %}">Eliminar</a>
+                        
+                     </p>
+                  </li>
+                  <br/>
+               {% endfor %}
+
+            </ul>
+
+            <p>
+               <a href="{% url 'create' %}">Crear nuevo articulo</a>
+            </p>
+
+      {% endif %}
+   {% endif %}
+
+<!-- Esto es un comentario en html-->
+{% comment 'Esto es un comentario' %}
+
+{% endcomment %}
+
+
+<br/>
+
+{% endblock %}
+
+Y se puede dar estilos al mensaje en la hoja de estilos de mensajes en el archivo styles.css, en la carpeta static/ css/ en el archivo styles.css, va lo siguiente:
+
+.message{
+    padding: 20px;
+    margin-top: 5px;
+    background: green;
+    border: 1px solid #444;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
