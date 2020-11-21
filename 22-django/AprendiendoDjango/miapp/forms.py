@@ -9,29 +9,28 @@ class formArticulo(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete el titulo',
-                'class':'titulo_form_article'
+                'placeholder': 'Mete el titulo',
+                'class': 'title_class_article'
             }
         ),
         validators=[
-            validators.MinLengthValidator(4, 'El Titulo es demasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9]*$','El titulo esta mal formado', 'invalid_title')
+            validators.MinLengthValidator(4, 'El titulo es demasiado corto'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El titulo esta mal formado','invalid_title')
         ]
     )
 
     content = forms.CharField(
         label = "Content",
         required = True,
-        widget=forms.Textarea(
+        widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete el contenido',
-                'class':'content_form_article',
-                'id':'content_form'
+                'placeholder': 'Mete el contenido',
+                'class': 'content_class_articulo'
             }
         ),
         validators=[
-            validators.MinLengthValidator(3, 'El contenido es demasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9]*$','El contenido esta mal formado', 'invalid_content')
+            validators.MinLengthValidator(4, 'El contenido es muy pequeno'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El contenido esta mal formado','invalid_conten_articulo')
         ]
     )
 
@@ -56,20 +55,30 @@ class formCategory(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete el nombre',
-                'class':'content_form_category'
+                'placeholder': 'Mete el nombre',
+                'class': 'content_form_category'
             }
         ),
         validators=[
             validators.MinLengthValidator(4, 'El nombre de categoria es demasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9]*$','El nombre de categoria esta mal formado','invalid_name_category')
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El nombre de categoria esta mal formado','invalid_name_category')
         ]
     )
 
     description = forms.CharField(
         label="Descripcion",
         max_length=250,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Mete la descripcion',
+                'class': 'descrip_class_category'
+            }
+        ),
+        validators=[
+            validators.MinLengthValidator(3, 'La descripcion es muy corta'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El contenido esta mal formado','invalid_descrip_category')
+        ]
     )
 
 class formSubCate(forms.Form):
@@ -80,13 +89,13 @@ class formSubCate(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete el name',
-                'class':'name_form_subcate'
+                'placeholder': 'Mete el name',
+                'class': 'name_form_subcate'
             }
         ),
         validators=[
             validators.MinLengthValidator(4, 'El nombre de la SubCategoria es damasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9]*$','el nombre de la subcategoria esta mal formado','invalid_name_subcateg')
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','el nombre de la subcategoria esta mal formado','invalid_name_subcateg')
         ]
     )
 
@@ -96,10 +105,14 @@ class formSubCate(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete la description',
-                'class':'descrip_form_subcate'
+                'placeholder': 'Mete la description',
+                'class': 'descrip_form_subcate'
             }
-        )
+        ),
+        validators=[
+            validators.MinLengthValidator(4, 'La descripcion es muy corta'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','La descripcion es invalida','invalid_descrip_subcate')
+        ]
     )
 
 
@@ -233,10 +246,14 @@ class formPersona(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete los apellidos',
-                'class':'apellidos_form_persona'
+                'placeholder': 'Mete los apellidos',
+                'class': 'apellidos_form_persona'
             }
-        )
+        ),
+        validators=[
+            validators.MinLengthValidator(2, 'Los apellidos son muy cortos'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','Apellidos esta mal formado','invalid_apellidos_per')
+        ]
     )
 
     nombres = forms.CharField(
@@ -245,10 +262,14 @@ class formPersona(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete los nombres',
-                'class':'nombres_form_persona'
+                'placeholder': 'Mete los nombres',
+                'class': 'nombres_form_persona'
             }
-        )
+        ),
+        validators=[
+            validators.MinLengthValidator(3, 'Los nombres son muy cortos'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','Los nombres estan mal formado','Invalid_nombres_per')
+        ]
     )
 
     pais = forms.TypedChoiceField(
@@ -263,8 +284,8 @@ class formPersona(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholher':'Mete la provincia',
-                'class':'provincia_form_persona'
+                'placeholher': 'Mete la provincia',
+                'class': 'provincia_form_persona'
             }
         )
     )
@@ -275,10 +296,14 @@ class formPersona(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete la direccion',
-                'class':'direccion_form_persona'
+                'placeholder': 'Mete la direccion',
+                'class': 'direccion_form_persona'
             }
-        )
+        ),
+        validators=[
+            validators.MinLengthValidator(3, 'La direccion es muy corta'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','La direccion esta mal formada','invalid_direcc_per')
+        ]
     )
 
     correo = forms.EmailField(
@@ -286,8 +311,8 @@ class formPersona(forms.Form):
          max_length=150,
          widget= forms.EmailInput(
              attrs={
-                 'placeholder':'Mete el correo electronico',
-                 'class':'correo_form_persona'
+                 'placeholder': 'Mete el correo electronico',
+                 'class': 'correo_form_persona'
              }
          )
     )
@@ -297,10 +322,14 @@ class formPersona(forms.Form):
         label = "Telefono",
         widget = forms.TextInput(
             attrs={
-                'placeholder':'Mete el telefono',
-                'class':'telefono_form_persona'
+                'placeholder': 'Mete el telefono',
+                'class': 'telefono_form_persona'
             }
-        )
+        ),
+        validators=[
+            validators.MinLengthValidator(4, 'El telefono es muy corto'),
+            validators.RegexValidator('^[0-9 ,]*$')
+        ]
     )
 
     profesion = forms.CharField(
@@ -309,10 +338,14 @@ class formPersona(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder':'Mete tu titulo profesional',
-                'class':'profesion_class_persona'
+                'placeholder': 'Mete tu titulo profesional',
+                'class': 'profesion_class_persona'
             }
-        )
+        ),
+        validators=[
+            validators.MinLengthValidator(3, 'El titulo es demasiado corto'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El titulo esta mal formado','invalid_titulo_per')
+        ]
     )
 
     certificado = forms.CharField(
@@ -322,6 +355,10 @@ class formPersona(forms.Form):
                 'placeholder':'Mete tu certificado',
                 'class':'certificado_class_persona'
             }
-        )
+        ),
+        validators=[
+            validators.MinLengthValidator(3, 'El certificado es muy corto'),
+            validators.RegexValidator('^[A-Za-z0-9 .,]*$','El certificado esta mal formado', 'invalid_certif_per')
+        ]
     )
 
