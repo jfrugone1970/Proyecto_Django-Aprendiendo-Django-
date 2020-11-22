@@ -2317,3 +2317,6 @@ Y se puede dar estilos al mensaje en la hoja de estilos de mensajes en el archiv
     margin-bottom: 10px;
 }
 
+<p align="center">
+  <img src ="django_formulario (sesiones).jpg" />
+</p>
