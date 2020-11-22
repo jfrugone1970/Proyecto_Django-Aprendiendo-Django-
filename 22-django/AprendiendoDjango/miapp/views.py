@@ -193,11 +193,15 @@ def create_full_article(request):
             )
 
             articulos.save()
+
+            # Crear mensaje flash (que es una sesion que solo se muestra 1 vez)
+            messages.success(request, f'Has creado correctamente el articulo {articulos.id}')
             
             return redirect('lista_gen_art')
 
         else:
 
+            
             return HttpResponse("<h2> Formulario invalido </h2>")    
 
 
@@ -258,7 +262,6 @@ def save_categoria(request):
         return redirect('lista_gen_cat')
 
     
-    
     else:
 
         return HttpResponse("<h2>No se ha podido grabar articulo</h2>")
@@ -282,6 +285,9 @@ def create_full_category(request):
 
             categoria.save()
 
+            # Crear mensaje flash (que es una sesion que solo se muestra 1 vez)
+            messages.success(request, f'Has creado correctamente la categoria {categoria.id}')
+    
             return redirect('lista_gen_cat')
 
         else:
@@ -362,6 +368,9 @@ def create_full_subcate(request):
             )
 
             subcategoria.save()
+
+            # Crear mensaje flash (sesion que solo se muestra 1 vez)
+            messages.success(request, f'Has creado correctamente la subcategoria {subcategoria.id}')
             
             return redirect('lista_gen_subcate')
 
@@ -653,6 +662,8 @@ def create_full_persona(request):
 
             persona.save()
 
+            # Crear mensaje flash (sesion que se muestra 1 sola vez)
+            messages.success(request, f'Has creado correctamente la persona {persona.id}')
             
             return redirect('lista_gen_personas')
 
