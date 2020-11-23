@@ -15,7 +15,7 @@ class formArticulo(forms.Form):
         ),
         validators=[
             validators.MinLengthValidator(4, 'El titulo es demasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9 .]*$','El titulo esta mal formado','invalid_titulo_articulo')
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El titulo esta mal formado','invalid_title')
         ]
     )
 
@@ -30,7 +30,7 @@ class formArticulo(forms.Form):
         ),
         validators=[
             validators.MinLengthValidator(4, 'El contenido es demasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9 .]*$','El contenido esta mal formado','invalid_content_articulo')
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El contenido esta mal formado','invalid_content')
         ]
     )
 
@@ -60,8 +60,8 @@ class formCategory(forms.Form):
             }
         ),
         validators=[
-            validators.MinLengthValidator(4, 'El nombre de categoria es demasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9 .]*$','El nombre de categoria esta mal formado','invalid_name_category')
+            validators.MinLengthValidator(4, 'El nombre es demasiado corto'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El nombre esta mal formado','invalid_form_name')
         ]
     )
 
@@ -77,7 +77,7 @@ class formCategory(forms.Form):
         ),
         validators=[
             validators.MinLengthValidator(4, 'La descripcion es demasiado corta'),
-            validators.RegexValidator('^[A-Za-z0-9 .,]*$','La descripcion esta mal formada','invalid_descrip_category')
+            validators.RegexValidator('^[A-Za-z0-9 .,]*$','La descripcion esta mal formada','invalid_form_descrip')
         ]
     )
 
@@ -94,8 +94,8 @@ class formSubCate(forms.Form):
             }
         ),
         validators=[
-            validators.MinLengthValidator(4, 'El nombre de la subcategoria es demasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9 .,]*$','El nombre de la subcategoria esta mal formada','invalid_name_subcateg')
+            validators.MinLengthValidator(4, 'El nombre de la subcategoria es demasiado corta'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El nombre de la subcategoria esta mal formada','invalid_form_name_subca')
         ]
     )
 
@@ -110,8 +110,8 @@ class formSubCate(forms.Form):
             }
         ),
         validators=[
-            validators.MinLengthValidator(4, 'La descripcion es demasiada corta'),
-            validators.RegexValidator('^[A-Za-z0-9 .,]*$','La descripcion esta mal formada','invalid_descrip_subcate')
+            validators.MinLengthValidator(4, 'La descripcion es demasiado corta'),
+            validators.RegexValidator('^[A-Za-z0-9 ,.]*$','La descripcion esta mal formada','invalid_form_descrip_subca')
         ]
     )
 
@@ -250,10 +250,11 @@ class formPersona(forms.Form):
                 'class': 'apellidos_form_persona'
             }
         ),
-       validators=[
-           validators.MinLengthValidator(2, 'Los apellidos son demasiados cortos'),
-           validators.RegexValidator('^[A-Za-z0-9 .]*$','Los apellidos estan mal formado','invalid_apellido_per')
-       ]
+        validators=[
+            validators.MinLengthValidator(2, 'Los apellidos son demasiado corto'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','Los apellidos estan mal formados','invalid_apellido_form_pers')
+        ]
+       
     )
 
     nombres = forms.CharField(
@@ -267,8 +268,8 @@ class formPersona(forms.Form):
             }
         ),
         validators=[
-            validators.MinLengthValidator(2, 'Los nombres son demasiato cortos'),
-            validators.RegexValidator('^[A-Za-z0-9 .]*$','Los nombres estan mal formados','invalid_nomb_pers')
+            validators.MinLengthValidator(2, 'Los nombres es demasiado corto'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','Los nombres estan mal formados','invalid_nombre_form_pers')
         ]
     )
 
@@ -289,8 +290,8 @@ class formPersona(forms.Form):
             }
         ),
         validators=[
-            validators.MinLengthValidator(2, 'El nombre de la provincia es demasiada corta'),
-            validators.RegexValidator('^[A-Za-z0-9 ,]*$','El nombre de la provincia esta mal formada','invalid_prov_pers')
+            validators.MinLengthValidator(3, 'El nombre de provincia es demasiado corto'),
+            validators.RegexValidator('^[A-Za-z0-9 ,]*$','El nombre de provincia esta mal formado','invalid_form_provin_pers')
         ]
     )
 
@@ -306,7 +307,7 @@ class formPersona(forms.Form):
         ),
         validators=[
             validators.MinLengthValidator(3, 'La direccion es demasiado corta'),
-            validators.RegexValidator('^[A-Za-z0-9 .]*$','La direccion esta mal formada','invalid_direc_pers')
+            validators.RegexValidator('^[A-Za-z0-9 .,]*$','La direccion esta mal formada','invalid_form_direcc_pers')
         ]
     )
 
@@ -332,7 +333,7 @@ class formPersona(forms.Form):
         ),
         validators=[
             validators.MinLengthValidator(3, 'El telefono es demasiado corto'),
-            validators.RegexValidator('^[0-9 ()-,]*$','Los telefonos estan mal formado','invalid_telef_pers')
+            validators.RegexValidator('^[0-9 (),]*$','El telefono es demasiado corto','invalid_form_fono_pers')
         ]
     )
 
@@ -347,8 +348,8 @@ class formPersona(forms.Form):
             }
         ),
         validators=[
-            validators.MinLengthValidator(3, 'El nombre de titulo es demasiado corta'),
-            validators.RegexValidator('^[A-Za-z0-9 .]*$','El nombre del titulo esta mal formado','invalid_titulo_pers')
+            validators.MinLengthValidator(3, 'El nombre del titulo es demasiado corto'),
+            validators.RegexValidator('^[A-Za-z0-9 .]*$','El titulo esta mal formado','invalid_form_profe_pers')
         ]
     )
 
@@ -362,7 +363,7 @@ class formPersona(forms.Form):
         ),
         validators=[
             validators.MinLengthValidator(3, 'El nombre del certificado es demasiado corto'),
-            validators.RegexValidator('^[A-Za-z0-9 ,.]*$','El nombre del certificado esta mal formado','invalid_certif_pers')
+            validators.RegexValidator('^[A-Za-z0-9 .,]*$','El nombre del certificado esta mal formado','invalid_form_cert_pers')
         ]
     )
 
