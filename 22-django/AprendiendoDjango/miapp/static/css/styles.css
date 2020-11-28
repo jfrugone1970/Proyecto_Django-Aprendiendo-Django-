@@ -223,6 +223,11 @@ contador-visitas{
 
 }
 
+.clearfix{
+    clear: both;
+    float: none;
+}
+
 .rojo{
     color: red;
     text-shadow: 0px 0px 4px black;
@@ -283,6 +288,62 @@ contador-visitas{
     font-size: 30px;
     margin-bottom: 10px;
     margin-top: 5px;
+}
+
+.article-item{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    clear: both;
+
+}
+
+.article-item .image{
+    width: 100px;
+    height: 100px;
+    float: left;
+    overflow: hidden;
+
+}
+
+.article-item .image img{
+    height: 100px;
+    width: 100px;
+
+
+}
+
+.article-item .data{
+    float: left;
+    padding: 10px;
+    padding-top: 0px;
+}
+
+.article-item h2{
+    display: block;
+    font-size: 25px;
+    color: #333;
+    margin-bottom: 5px;
+
+}
+
+.article-item span.date{
+    display: block;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.btn{
+    padding: 10px;
+    background: red;
+    color: white;
+    border: 1px solid black;
+    display: block;
+    margin-top: 20px;
+    width: 120px;
+    text-align: center;
 }
 
 aside{

@@ -32,20 +32,27 @@
 
             <h3><p>Listado de categorias</p><h3>
 
-            <ul>
+            
 
                {% for categoria in categorias %}
 
-                  <li>
-                     <h4>{{categoria.id}}. {{categoria.name}}</h4>
-                     <p>
-                        {{categoria.description}}
-                        <a href="{% url 'borrar_categoria' id=categoria.id %}">Eliminar</a>
-                     </p>
-                  </li>
+                  <article class="article-item">
+                     <h2>{{categoria.id}}. {{categoria.name}}</h2>
+
+                     <div class="data">
+                        <p>
+                           {{categoria.description}}
+                           <a href="{% url 'borrar_categoria' id=categoria.id %}" class="btn btn-delete">Eliminar</a>
+                        </p>
+                     
+                     </div>
+                     
+                     <div class="clearfix"></div>
+                    
+                  </article>
                {% endfor %}
 
-            </ul>
+            
 
             <p>
                <a href="{% url 'create_categori' %}">Crear nueva categoria</a>

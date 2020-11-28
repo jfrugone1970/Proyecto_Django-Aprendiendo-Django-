@@ -32,20 +32,28 @@
 
             <h3><p>Listado de Subcategorias</p><h3>
 
-            <ul>
+            
 
                {% for subcategori in subcategorias %}
 
-                  <li>
+                  <article class="article-item">
                      <h4>{{subcategori.id}}. {{subcategori.name}}</h4>
-                     <p>
-                        {{subcategori.description}}
-                        <a href="{% url 'borrar_subcateri' id=subcategori.id %}">Eliminar</a>
-                     </p>
-                  </li>
+
+                     <div class="data">
+                        <p>
+                           {{subcategori.description}}
+                           <a href="{% url 'borrar_subcateri' id=subcategori.id %}" class="btn btn-delete">Eliminar</a>
+                        </p>
+                     
+                     </div>
+
+                     <div class="clearfix"></div>
+                     
+                     
+                  </article>
                {% endfor %}
 
-            </ul>
+            
 
             <p>
                 <a href="{% url 'create_subcategoria' %}">Crear SubCategoria</a>

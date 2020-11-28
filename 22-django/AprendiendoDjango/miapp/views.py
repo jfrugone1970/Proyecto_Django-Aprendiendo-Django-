@@ -686,7 +686,7 @@ def create_full_persona(request):
 
 def personas_gen(request):
 
-    personas = DatosPer.objects.order_by("apellidos")
+    personas = DatosPer.objects.order_by("id")
 
     return render(request, 'persona.html',{
         'personas':personas
@@ -698,7 +698,14 @@ def borrar_persona(request, id):
     mensaje1 = ""
 
     persona = DatosPer.objects.get(pk=id)
-    persona.delete()
+
+    if persona.apellidos == "Frugone Jaramillo" and persona.nombres == "Jose Fernando":
+
+        mensaje_eli = f"<h2> No se puede eliminar Administrador {persona.apellidos} - {persona.nombres} </h2>"
+        return HttpResponse(mensaje_eli)
+    else:
+
+        persona.delete()
     
     mensaje = "Se borro registro de persona exitosamente"
     mensaje1 = "El registro de persona ya no existe en la tabla"

@@ -32,32 +32,48 @@
 
             <h3><p>Listado de articulos</p><h3>
 
-            <ul>
+            
 
                {% for articulo in articulos %}
 
-                  <li>
-                     <h4>{{articulo.id}}. {{articulo.title}}</h4>
-                     <span>{{articulo.created_at}}</span>
+                  <article class="article-item">
 
-                     {% if articulo.public %}
-                        
-                        <strong>Articulo Publicado</strong>
-
-                     {% else %}
-                     
-                        <strong>Articulo Privado</strong> 
+                     {% if articulo.image != 'null' and articulo.image.url|length >= 1 %}
+                        <div class="image">
+                             <img src="{{articulo.image.url}}" />
+                        </div> 
+                       
                      {% endif %}
-                     <p>
-                        {{articulo.content}}
-                        <a href="{% url 'borra_articulo' id=articulo.id %}">Eliminar</a>
+
+                     <div class="data">
+
+                        <h2>{{articulo.id}}. {{articulo.title}}</h2>
+                        <span class="date">{{articulo.created_at}}</span>
+
+                        {% if articulo.public %}
+                           
+                           <strong>Articulo Publicado</strong>
+
+                        {% else %}
                         
-                     </p>
-                  </li>
-                  <br/>
+                           <strong>Articulo Privado</strong> 
+                        {% endif %}
+                        <p>
+                           {{articulo.content}}
+                           <a href="{% url 'borra_articulo' id=articulo.id %}" class="btn btn-delete">Eliminar</a>
+                           
+                        </p>
+                        
+                     </div>
+
+                     <div class="clearfix"></div>
+                     <br/>
+
+                  </article>
+                  
                {% endfor %}
 
-            </ul>
+            
 
             <p>
                <a href="{% url 'create' %}">Crear nuevo articulo</a>

@@ -25,28 +25,42 @@
 
    {% else %}
 
-      <ul>
+      
          {% for persona in personas %}
-            <li>
+            <article class="article-item">
                <p>
-                  <h4><strong>{{persona.pais}} . {{persona.provincia}}</strong></h4> 
+                  <h2><strong>{{persona.pais}} . {{persona.provincia}}</strong></h2> 
                </p>
-               <br/>
-               <strong>{{persona.id}}  .  {{persona.apellidos}}  .  {{persona.nombres}}</strong>
                <br/>
 
-               <p><strong> {{persona.profesion}} . {{persona.certificado}} . {{persona.direccion}} . {{persona.correo}} . {{persona.telefono}} </strong></p>
-               <p>
-                           <p><strong>Si decide borrar de un click en eliminar {{persona.apellidos}}  .  {{persona.nombres}}</strong></p>
-                           <a href="{% url 'borrar_persona' id=persona.id %}">Eliminar</a>
-                           
-               </p>
+               {% if persona.image != 'null' and persona.image.url|length >= 1 %}
+                        <div class="image">
+                             <img src="{{persona.image.url}}" />
+                        </div> 
+                       
+               {% endif %}
+
+               <div class="data">
+                  <p><strong> {{persona.profesion}} . {{persona.certificado}} . {{persona.direccion}} . {{persona.correo}} . {{persona.telefono}} </strong></p>
+                  <p>
+                              <p><strong>Si decide borrar de un click en eliminar {{persona.apellidos}}  .  {{persona.nombres}}</strong></p>
+                              <a href="{% url 'borrar_persona' id=persona.id %}" class="btn btn-delete">Eliminar</a>
+                              
+                  </p>
+                  <strong>{{persona.id}}  .  {{persona.apellidos}}  .  {{persona.nombres}}</strong>
+                  <br/> 
+               </div>
                
-            </li>
 
+               <div class="clearfix"></div>
+              
+               
+            </article>
+
+            
             <br/>
          {% endfor %}
-      </ul>
+      
 
       <p>
          <strong><a href="{% url 'create_persona' %}">Crear nueva persona</a></strong>
