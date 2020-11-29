@@ -3089,6 +3089,52 @@ en el archivo 'styles.css', que esta en la carpeta /css, dentro de 'static' se e
 
 (ademas de los otros estilos que tenia el archivo 'styles.css')
 
+<h4><strong>Configuracion basica del panel de Administracion de Django</strong></h4>
+<strong>Cambiar el titulo del panel .- </strong>
+
+Para cambiar el titulo del panel en el archivo de admin.py del proyecto 'miapps', se utliza la libreria site_header de esta manera:
+
+title = "Master en Python - Lcdo Jose Fernando Frugone Jaramillo"
+admin.site.site_header = title
+
+<strong>Cambiar el subtitulo del panel .- </strong>
+
+Ahora bien ya hemos visto como cambio el titulo del panel pero que no cambia el subtitulo, para hacer aquello se realiza lo siguiente, en el archivo 'admin.py' del proyecto:
+
+admin.site.site_title = title
+admin.site.index_title = "Panel de Gestion"
+
+lo que queda asi el archivo 'admin.py':
+
+from django.contrib import admin
+from .models import Article, Category, SubCategory, DatosPer
+
+# Register your models here.
+class ArticleAdmin(admin.ModelAdmin):
+      readonly_fields = ('created_at', 'updated_at')
+
+class CategoryAdmin(admin.ModelAdmin):
+      readonly_fields = ('created_at', 'updated_at')
+
+class SubCategoryAdmin(admin.ModelAdmin):
+      readonly_fields = ('created_at', 'updated_at') 
+
+admin.site.register(Article, ArticleAdmin)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(SubCategory, SubCategoryAdmin)
+admin.site.register(DatosPer)
+
+# Cambiar el titulo del panel
+title = "Master en Python - Lcdo Jose Fernando Frugone Jaramillo"
+admin.site.site_header = title
+admin.site.site_title = title
+admin.site.index_title = "Panel de gestion"
+
+<p align="center">
+  <img src ="Django_adminitracion (panel_cambio_titulo).jpg" />
+</p>
+
+
 
 
 
