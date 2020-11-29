@@ -16,6 +16,12 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
 admin.site.register(DatosPer)
 
+# Cambiar el titulo del panel
+title = "Master en Python - Lcdo Jose Fernando Frugone Jaramillo"
+admin.site.site_header = title
+admin.site.site_title = title
+admin.site.index_title = "Panel de gestion"
+
 
 
 
