@@ -346,6 +346,17 @@ contador-visitas{
     text-align: center;
 }
 
+.btn1{
+    display: block;
+    padding: 10px;
+    background: green;
+    color: white;
+    border: 1px solid black;
+    margin-top: 20px;
+    width: 300px;
+    text-align: center;
+}
+
 aside{
     float: right;
     width: 20%;
