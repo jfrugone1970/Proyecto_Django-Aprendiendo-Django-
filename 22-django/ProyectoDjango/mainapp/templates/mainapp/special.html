@@ -1,0 +1,38 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %} {{title}} {% endblock %}
+   
+
+{% block content %}
+    
+
+    {% if user.username %} 
+      {% if user.is_superuser %}
+            
+            <strong>{{title}}</strong>
+
+            <p>
+              <strong><a href="{% url 'create_pagina' %}" class="btn1 btn1-agregar">Crear pagina</a></strong>
+            </p>
+
+      {% else %}
+
+         {% if messages %}
+      
+            {% for message in messages %}
+                <div class="alert alert-warning">
+                      {{message}}
+                </div>
+            {% endfor %}
+
+        {% endif %} 
+
+
+
+      {% endif %}
+    {% endif %}      
+
+     
+            
+    
+{% endblock %} 

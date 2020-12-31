@@ -1,0 +1,38 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %} Mi Pagina de Pruebas {% endblock %}
+
+{% block content %}
+
+
+<h1 class="title">Formularios en Django | Lcdo Jose Frugone</h1>
+
+<form action="{% url 'create_full_pagina' %}" method="POST">
+
+     {% csrf_token %}
+     
+     <label for="title">Title</label>
+     <input type="text" name="title" placeholder="Ingresa tu titulo" />
+
+     <label for="content">Content</label>
+     <textarea name="content" placeholder="Mete el contenido"></textarea>
+
+     <label for="slug">Url_Amigable(slug)</label>
+     <input type="text" name="slug" placeholder="Ingrese un slug" />
+
+     <label for="visible">Visible?</label>
+     <select name="visible">
+           <option value="1">Si</option>
+           <option value="0">No</option>
+     </select>
+
+     <label for="order">Order</label>
+     <input type="number" name="order" placeholder=0 />
+
+     <input type="submit" value="Guardar" />
+
+
+</form>
+
+
+{% endblock %}

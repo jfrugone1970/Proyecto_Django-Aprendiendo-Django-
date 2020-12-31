@@ -1,0 +1,19 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %} {{categories.description}} {% endblock %}
+
+  
+
+{% block content %}
+    <h1 class="title">{{categories.description}}</h1>
+    
+    {% comment%}
+    {% include 'articles/articles.html' with articles=categories.article_set.all %}
+    {% endcomment %}
+
+  
+    {% include 'articles/articles.html' %}
+
+{% endblock %}
+
+

@@ -1,0 +1,76 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+  
+
+{% block content %}
+    <h1 class="title">{{title}}</h1>
+
+    {% if articles %}
+
+            <h3><p>Listado de articulos</p><h3>
+
+            
+
+               {% for article in articles %}
+
+                  <article class="article-item">
+
+                     {% if article.image != 'null' and article.image.url|length >= 1 %}
+                        <div class="image">
+                             <img src="{{article.image.url}}" />
+                        </div> 
+                       
+                     {% endif %}
+
+                     <div class="data">
+                        {% for datos1 in article.categories.all %}
+                            <h2><a href="{% url 'detalle' datos1.id %}">{{datos1.title}}</a></h2>
+                        {% endfor %}
+                        <p>
+                            {% for datos in article.categories.all %}
+                                <a href="{% url 'categorias' datos.id %}">{{datos.title}}</a>
+
+                                {% if forloop.counter < article.categories.all|length %}
+                                     {{'-'}}
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        <span class="date">
+                           {{article.user.first_name}} {{article.user.last_name}}
+                           {{article.created_at}}
+                        </span>
+
+                        {% if article.public %}
+                           
+                           <strong>Articulo Publicado</strong>
+
+                        {% else %}
+                        
+                           <strong>Articulo Privado</strong> 
+                        {% endif %}
+                        
+                        <p>
+                           
+                           {{article.content|safe}}
+                           
+                           
+                        </p>
+                        
+                     </div>
+
+                     <div class="clearfix"></div>
+                     <br/>
+
+                  </article>
+                  
+               {% endfor %}
+
+            
+
+    {% endif %}
+    
+
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %} {{title}} {% endblock %}
+   
+
+{% block content %}
+   <h1 class="title">{{title}}</h1>
+
+   {% if messages %}
+      
+       {% for message in messages %}
+           <div class="alert alert-success">
+                 {{message}}
+           </div>
+       {% endfor %}
+
+   {% endif %}
+
+   {% if user.email %}
+        <h2>Bienvenido, {{request.user.first_name}} {{request.user.last_name}}</h2>
+        <p>
+            {{user.email}}
+        </p>
+
+    {% else %}
+        <h2>Identificate para agregar paginas</h2>
+
+    {% endif %}
+
+   {% if title2 %}
+       
+         <strong>{{title2}}</strong>
+
+   {% endif %}
+
+   {% if user.is_superuser %}
+
+       <hr>
+
+       {% if messages %}
+      
+       {% for message in messages %}
+           <div class="alert alert-admin">
+                 {{message}}
+           </div>
+       {% endfor %}
+
+   {% endif %}
+
+       <h3>{{title_especial}}</h3>
+
+       <form action="{% url 'especial' %}" method="POST">
+
+            {% csrf_token %}
+
+            <label for="username">Username</label>
+            <input type="text" name="username" placeholder="username" />
+
+            <label for="password">Clave</label>
+            <input type="password" name="password" />
+            
+            <input type="submit" value="Opcion_espe" />
+
+
+       </form>
+
+
+   {% endif %}
+
+
+
+        
+
+{% endblock %}
