@@ -3134,6 +3134,29 @@ admin.site.index_title = "Panel de gestion"
   <img src ="Django_adminitracion (panel_cambio_titulo).jpg" />
 </p>
 
+<h2><strong>Segundo Proyecto de Django </strong></h2>
+<h3><strong> Gestion del Blog </strong></h3>
+
+Para este proyecto de django de Gestion en Blog que se lo identifica en el directorio de Django del proyecto (22-Django) como ProyectoDjango, este proyecto de Django de Gestion de Blog lo que permite es mostrar los blog de la pagina inicial organizados por categorias que en el menu del proyecto lo que te pide es logearte inicialmente para poder tener acceso al proyecto de Gestion del Blog, una vez que te logoneas tienes acceso al proyecto de Blog, como la pantalla de a continuacion:
+
+<p align="center">
+  <img src ="Proyecto_Web_Blog_login.jpg" />
+</p>
+
+Una vez que te logoneas te permite tener acceso a la pagina WEB antes mencionada del proyecto de Gestion del Blog, ahora bien puedes agregar nuevas paginas pero con usuario administrador de la pagina que permite crear mas paginas al proyecto WEB de Django en la que la pantalla aparece de la siguiente manera:
+
+<p align="center">
+  <img src ="Proyecto_Web_Blog.jpg" />
+</p>
+
+<p align="center">
+  <img src ="Proyecto_Web_Blog1.jpg" />
+</p>
+
+Por lo que comparto el ProyectoDjango el codigo para que lo revises.
+
+
+
 
 
 
